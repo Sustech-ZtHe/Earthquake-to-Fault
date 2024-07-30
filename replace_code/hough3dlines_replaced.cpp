@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 #include <Eigen/Dense>
 
 using Eigen::MatrixXf;
@@ -267,8 +268,19 @@ int main(int argc, char ** argv) {
   }
  
   ////
-  FILE* fp = fopen("/home/me/Documents/H3D/sp.output.txt", "w");
-  FILE* fp_ab = fopen("/home/me/Documents/H3D/ab.output.txt", "w");
+  //FILE* fp = fopen("/home/dell/文档/H3D/hough-3d-lines-master/sp.output.txt", "w");
+  //FILE* fp_ab = fopen("/home/dell/文档/H3D/hough-3d-lines-master/ab.output.txt", "w");
+  // 获取当前工作目录 
+  char cwd[1024]; 
+  if (getcwd(cwd, sizeof(cwd)) == NULL) { 
+  	perror("getcwd() error"); 
+  	return 1; 
+  } 
+  // 拼接文件路径 
+  string filepath_sp = string(cwd) + "/sp.output.txt"; 
+  string filepath_ab = string(cwd) + "/ab.output.txt";
+  FILE* fp = fopen(filepath_sp.c_str(), "w"); 
+  FILE* fp_ab = fopen(filepath_ab.c_str(), "w"); 
   
   int Count =0;
   // iterative Hough transform
