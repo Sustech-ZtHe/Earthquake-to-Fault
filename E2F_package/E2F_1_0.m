@@ -173,7 +173,6 @@ annotation('textbox', [pos(1)+pos(3)*0.08, pos(2)+pos(4)*0.12, 0.8*pos(3), 0.75*
             'String', ['U=',num2str(unacc_num)], ...
             'FontSize', 13, 'Color', [0.6 0 0]);
 % 
-% 
 figure('Position', [100, 100, 1880, 1560]);
 faia= fai(-90+10*downlim<=fai&fai<=-90+10*uplim);
 faiu= fai(fai<-90+10*downlim|-90+10*uplim<fai);
@@ -322,152 +321,151 @@ for l=1:8
     RC=[RC;[M1,M2]];
 end
 RC_per=sum(RC,2)./line_1(end);
-disp('Diff C Hough&DBSCAN Finished')
-% 
-% %% Elliptic Fitting %%
-% figure('Position', [100, 100, 1880, 1560]);number_EPC=[];number_Eve=[];ECC=[];
-% ratio=[1;1;1];Azimuth=[];Elevation=[];FaultpaRameters=[];Magrecord=[];
-% for l=1:8  
-%     subplot(4,4,[C(2,l),C(3,l)])
-%     [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,MidMag,UpMag,MODEL);
-%     EP=[];EP_km=[];X=[];Y=[];Z=[];n=0;ell=[];
-%     line_e=unique(FE(:,end));
-%     for i=1:length(line_e)
-%        line_nums_e(i,1)=find(ismember(FE(:,end),line_e(i,1),'rows'),1);
-%        line_nums_e(i,2)=find(ismember(FE(:,end),line_e(i,1),'rows'),1,'last')+1;
-%        line_nums_e(i,3)=line_e(i,1);
-%     end
-%     for i=1:length(line_e)
-%         sp_km=FE_km(line_nums_e(i,1):line_nums_e(i,2)-1,:);
-% 
-%         w=power(10.^(11.8+1.5*sp_km(:,4))/max(10.^(11.8+1.5*sp_km(:,4))),1/3);
-%         L=w*ratio(1,1);W=w*ratio(2,1);H=w*ratio(3,1);weight=[L,W,H];
-%         m1 = mean(sp_km(:,1:3));
-%         C1 = cov(sp_km(:,1:3));
-%         loca=median(hypo_out_points(:,1:3));
-%         [a,b,c,p1_u,p1_d,p2_u,p2_d,p3_u,p3_d,az,el,linea,Vol,elliptic_points]=plotcov_3d(C1, m1,sp_km,weight,ratio,0,s,loca);
-%         n=n+1;
-%         ell=[ell;[elliptic_points,ones(size(elliptic_points,1),1).*n]];
-%         Azimuth=[Azimuth;[az,l]];
-%         Elevation=[Elevation;[el,l]];
-%         mass=KMtoDEG(sp_km,la0,lo0);
-%         Magrecord=[Magrecord;[sp_km(:,4),ones(size(sp_km,1),1).*l,ones(size(sp_km,1),1).*n]];
-%         FaultpaRameters=[FaultpaRameters;[median(mass(:,1:3)),a,b,c,p1_u,p1_d,p2_u,p2_d,p3_u,p3_d,az,el,linea,size(sp_km,1)/Vol,l,size(sp_km,1)]];
-%         EP_km=[EP_km;elliptic_points,sp_km(1,11:13).*ones(size(elliptic_points,1),3)];
-%         ECC=[ECC;[linea,l,size(sp_km,1)/Vol,length(sp_km(:,1))]];
-%     end
-%     Scatter3_E2F(hypotout,FE,NEvents,['C= ',num2str(C(1,l))],0,l);hold on
-%     ellsurf(ell,la0,lo0);
-% 
-%     EP=KMtoDEG(EP_km,la0,lo0);  
-%     number_EPC=[number_EPC;length(unique(EP(:,4:6),'rows'))];
-%     number_Eve=[number_Eve;length(FE(:,1))];
-% end
-% FaultpaRameters(FaultpaRameters(:,28)>1,28)=1;
-% ECC(ECC(:,3)>1,3)=1;
-% ratio_Eve=number_Eve./NEvents;
-% disp('Fitting Finished')
-% % 
-% %% Subsurface fault
-% L=4;
-% SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,MidMag,UpMag,MODEL,minPoi)
-% 
-% %% RSM
-% figure('Position', [100, 100, 1880, 1560]);Energyratio=[];
-% mi=2;
-% for j=1:8
-%     subplot(4,4,[C(2,j),C(3,j)]);
-%     SubRLength=[];SubRWidth=[];Moreal=[];k=[];
-%     num0=find(FaultpaRameters(:,29)==j);
-%     FR=FaultpaRameters(num0,:);
-%     Ku=Kused(num0,:);
-%     for i=1:size(FR,1)
-%         dist1=pdist2([FR(i,7:9)],[FR(i,10:12)]);
-%         dist2=pdist2([FR(i,13:15)],[FR(i,16:18)]);
-%         SubRLength=[SubRLength;dist1];
-%         SubRWidth=[SubRWidth;dist2];
-%         if LowerMag<=Ku(i,1) & Ku(i,1)<UpMag
-%             k=[k;5];
-%         elseif Ku(i,1)<LowerMag
-%             k=[k;1];
-%         elseif Ku(i,1)>=UpMag
-%             k=[k;10];
-%         end
-%     end
-%     Motheo=3*10^10.*(10^3.*SubRLength).*(10^3.*SubRWidth).*SubRLength;
-%     num1=find(Magrecord(:,2)==j);
-%     MR=Magrecord(num1,:);
-%     for i1=1:MR(end,3)       
-%         num2=find(MR(:,3)==i1);
-%         Moreal=[Moreal;sum(10.^(1.5.*MR(num2,1)+9.1))];
-%     end
-%     loglog(Moreal,Moreal,'LineWidth',2,'LineStyle','-','Color',[0 0 0]);hold on
-%     d1=min(Moreal);
-%     d2=max(Moreal);
-%     dx=(d2-d1)/20;
-%     loglog(d1:dx:d2,10^mi.*(d1:dx:d2),'LineWidth',1.5,'LineStyle','--','Color',[0 0 0]);
-%     loglog(d1:dx:d2,10^-mi.*(d1:dx:d2),'LineWidth',1.5,'LineStyle',':','Color',[0 0 0]);
-%     ax=gca;
-%     set(ax,'FontSize',15,'XMinorTick','on','YMinorTick','off','TickLength',[0.02 0.1],'LineWidth',1);box on
-% %     xlabel('Superposition of Mo')
-% %     ylabel('Mo released by the ellipsoid')
-%     loglog(Moreal ,Motheo,'+','MarkerSize',8,'LineWidth',1.5);
-%     legend('RSM=1',['RSM=',num2str(1+mi/10)],['RSM=',num2str(1-mi/10)],'location','southeast','box','off');
-%     Energyratio=[Energyratio;log10(Motheo)./log10(Moreal),j.*ones(size(FR,1),1)];
-%     pos = get(ax, 'Position');
-%     annotation('textbox', [pos(1)+pos(3)*0.08, pos(2)+pos(4)*0.12, pos(3), 0.8*pos(4)], 'LineStyle','none',...
-%         'String', ['C= ',num2str(C(1,j))], ...
-%         'FontAngle','normal','FontSize', 20, 'Color', 'black');
-%     xlim([min(Moreal)*10^-mi max(Moreal)*10^mi])
-%     ylim([min(Motheo)*10^-mi max(Motheo)*10^mi])
-% % xlim([10^12 10^20])
-% % ylim([10^10 10^24])
-% % xticks([10^12 10^16 10^20])
-% % yticks([10^10 10^17 10^24])
-% end
-% min(Moreal)
-% min(Motheo)
-% %To
-% % xlim([10^7 10^15])
-% % ylim([10^2 10^20])
-% % xticks([10^7 10^11 10^15])
-% % yticks([10^2 10^11 10^20])
-% 
-% %Ok
-% % xlim([10^10 10^16])
-% % ylim([10^7 10^19])
-% % xticks([10^10 10^13 10^16])
-% % yticks([10^7 10^13 10^19])
-% 
-% % xlim([10^12 10^20])
-% % ylim([10^10 10^24])
-% % xticks([10^12 10^16 10^20])
-% % yticks([10^10 10^17 10^24])
-% 
-% %% Azimuth
-% figure('Position', [100, 100, 1880, 1560]);
-% for l=1:8  
-%     subplot(4,4,[C(2,l),C(3,l)])
-%     Azimuth=FaultpaRameters(FaultpaRameters(:,29)==l,25);
-%     AzimuthStat([Azimuth;Azimuth-180]);
-%     title(['C=',num2str(C(1,l))],'FontWeight','normal')
-%     rlim([0 20]);
-% end
-% %% Elevation
-% figure('Position', [100, 100, 1880, 1560]);
-% for l=1:8  
-%     subplot(4,4,[C(2,l),C(3,l)])
-%     DipA=FaultpaRameters(FaultpaRameters(:,29)==l,26);
-%     ElevationStat(DipA);
-%     title(['C=',num2str(C(1,l))],'FontWeight','normal')
-%     rlim([0 30]); 
-% end
-% %% Evalulate
-% EvaLF(ECC,Energyratio,NEvents,C,(10-mi)/10,2)
-% l61=[];l62=[];
-% for i=1:8
-%     numi=find(ECC(:,2)==i);
-%     l61=[l61;length(find(ECC(numi,1)>0.3))]
-%     numj=find(Energyratio(:,2)==i);
-%     l62=[l62;length(find(Energyratio(numj,1)>0.6))]
-% end
+disp('Diff C Hough&DBSCAN Finished');
+
+%% Elliptic Fitting %%
+figure('Position', [100, 100, 1880, 1560]);number_EPC=[];number_Eve=[];ECC=[];
+ratio=[1;1;1];Azimuth=[];Elevation=[];FaultpaRameters=[];Magrecord=[];
+for l=1:8  
+    subplot(4,4,[C(2,l),C(3,l)])
+    [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,MidMag,UpMag,MODEL);
+    EP=[];EP_km=[];X=[];Y=[];Z=[];n=0;ell=[];
+    line_e=unique(FE(:,end));
+    for i=1:length(line_e)
+       line_nums_e(i,1)=find(ismember(FE(:,end),line_e(i,1),'rows'),1);
+       line_nums_e(i,2)=find(ismember(FE(:,end),line_e(i,1),'rows'),1,'last')+1;
+       line_nums_e(i,3)=line_e(i,1);
+    end
+    for i=1:length(line_e)
+        sp_km=FE_km(line_nums_e(i,1):line_nums_e(i,2)-1,:);
+
+        w=power(10.^(11.8+1.5*sp_km(:,4))/max(10.^(11.8+1.5*sp_km(:,4))),1/3);
+        L=w*ratio(1,1);W=w*ratio(2,1);H=w*ratio(3,1);weight=[L,W,H];
+        m1 = mean(sp_km(:,1:3));
+        C1 = cov(sp_km(:,1:3));
+        loca=median(hypo_out_points(:,1:3));
+        [a,b,c,p1_u,p1_d,p2_u,p2_d,p3_u,p3_d,az,el,linea,Vol,elliptic_points]=plotcov_3d(C1, m1,sp_km,weight,ratio,0,s,loca);
+        n=n+1;
+        ell=[ell;[elliptic_points,ones(size(elliptic_points,1),1).*n]];
+        Azimuth=[Azimuth;[az,l]];
+        Elevation=[Elevation;[el,l]];
+        mass=KMtoDEG(sp_km,la0,lo0);
+        Magrecord=[Magrecord;[sp_km(:,4),ones(size(sp_km,1),1).*l,ones(size(sp_km,1),1).*n]];
+        FaultpaRameters=[FaultpaRameters;[median(mass(:,1:3)),a,b,c,p1_u,p1_d,p2_u,p2_d,p3_u,p3_d,az,el,linea,size(sp_km,1)/Vol,l,size(sp_km,1)]];
+        EP_km=[EP_km;elliptic_points,sp_km(1,11:13).*ones(size(elliptic_points,1),3)];
+        ECC=[ECC;[linea,l,size(sp_km,1)/Vol,length(sp_km(:,1))]];
+    end
+    Scatter3_E2F(hypotout,FE,NEvents,['C= ',num2str(C(1,l))],0,l);hold on
+    ellsurf(ell,la0,lo0);
+
+    EP=KMtoDEG(EP_km,la0,lo0);  
+    number_EPC=[number_EPC;length(unique(EP(:,4:6),'rows'))];
+    number_Eve=[number_Eve;length(FE(:,1))];
+end
+FaultpaRameters(FaultpaRameters(:,28)>1,28)=1;
+ECC(ECC(:,3)>1,3)=1;
+ratio_Eve=number_Eve./NEvents;
+disp('Fitting Finished')
+ 
+%% Subsurface fault
+L=4;
+SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,MidMag,UpMag,MODEL,minPoi)
+
+%% RSM
+figure('Position', [100, 100, 1880, 1560]);Energyratio=[];
+mi=2;
+for j=1:8
+    subplot(4,4,[C(2,j),C(3,j)]);
+    SubRLength=[];SubRWidth=[];Moreal=[];k=[];
+    num0=find(FaultpaRameters(:,29)==j);
+    FR=FaultpaRameters(num0,:);
+    Ku=Kused(num0,:);
+    for i=1:size(FR,1)
+        dist1=pdist2([FR(i,7:9)],[FR(i,10:12)]);
+        dist2=pdist2([FR(i,13:15)],[FR(i,16:18)]);
+        SubRLength=[SubRLength;dist1];
+        SubRWidth=[SubRWidth;dist2];
+        if LowerMag<=Ku(i,1) & Ku(i,1)<UpMag
+            k=[k;5];
+        elseif Ku(i,1)<LowerMag
+            k=[k;1];
+        elseif Ku(i,1)>=UpMag
+            k=[k;10];
+        end
+    end
+    Motheo=3*10^10.*(10^3.*SubRLength).*(10^3.*SubRWidth).*SubRLength;
+    num1=find(Magrecord(:,2)==j);
+    MR=Magrecord(num1,:);
+    for i1=1:MR(end,3)       
+        num2=find(MR(:,3)==i1);
+        Moreal=[Moreal;sum(10.^(1.5.*MR(num2,1)+9.1))];
+    end
+    loglog(Moreal,Moreal,'LineWidth',2,'LineStyle','-','Color',[0 0 0]);hold on
+    d1=min(Moreal);
+    d2=max(Moreal);
+    dx=(d2-d1)/20;
+    loglog(d1:dx:d2,10^mi.*(d1:dx:d2),'LineWidth',1.5,'LineStyle','--','Color',[0 0 0]);
+    loglog(d1:dx:d2,10^-mi.*(d1:dx:d2),'LineWidth',1.5,'LineStyle',':','Color',[0 0 0]);
+    ax=gca;
+    set(ax,'FontSize',15,'XMinorTick','on','YMinorTick','off','TickLength',[0.02 0.1],'LineWidth',1);box on
+%     xlabel('Superposition of Mo')
+%     ylabel('Mo released by the ellipsoid')
+    loglog(Moreal ,Motheo,'+','MarkerSize',8,'LineWidth',1.5);
+    legend('RSM=1',['RSM=',num2str(1+mi/10)],['RSM=',num2str(1-mi/10)],'location','southeast','box','off');
+    Energyratio=[Energyratio;log10(Motheo)./log10(Moreal),j.*ones(size(FR,1),1)];
+    pos = get(ax, 'Position');
+    annotation('textbox', [pos(1)+pos(3)*0.08, pos(2)+pos(4)*0.12, pos(3), 0.8*pos(4)], 'LineStyle','none',...
+        'String', ['C= ',num2str(C(1,j))], ...
+        'FontAngle','normal','FontSize', 20, 'Color', 'black');
+ xlim([10^7 10^15])
+ ylim([10^2 10^20])
+ xticks([10^7 10^11 10^15])
+ yticks([10^2 10^11 10^20])
+end
+min(Moreal)
+min(Motheo)
+
+%To
+% xlim([10^7 10^15])
+% ylim([10^2 10^20])
+% xticks([10^7 10^11 10^15])
+% yticks([10^2 10^11 10^20])
+
+%Ok
+% xlim([10^10 10^16])
+% ylim([10^7 10^19])
+% xticks([10^10 10^13 10^16])
+% yticks([10^7 10^13 10^19])
+
+% xlim([10^12 10^20])
+% ylim([10^10 10^24])
+% xticks([10^12 10^16 10^20])
+% yticks([10^10 10^17 10^24])
+
+%% Azimuth
+figure('Position', [100, 100, 1880, 1560]);
+for l=1:8  
+    subplot(4,4,[C(2,l),C(3,l)])
+    Azimuth=FaultpaRameters(FaultpaRameters(:,29)==l,25);
+    AzimuthStat([Azimuth;Azimuth-180]);
+    title(['C=',num2str(C(1,l))],'FontWeight','normal');
+    rlim([0 20]);
+end
+%% Elevation
+figure('Position', [100, 100, 1880, 1560]);
+for l=1:8  
+    subplot(4,4,[C(2,l),C(3,l)])
+    DipA=FaultpaRameters(FaultpaRameters(:,29)==l,26);
+    ElevationStat(DipA);
+    title(['C=',num2str(C(1,l))],'FontWeight','normal');
+    rlim([0 30]); 
+end
+%% Evalulate
+EvaLF(ECC,Energyratio,NEvents,C,(10-mi)/10,2)
+l61=[];l62=[];
+for i=1:8
+    numi=find(ECC(:,2)==i);
+    l61=[l61;length(find(ECC(numi,1)>0.3))];
+    numj=find(Energyratio(:,2)==i);
+    l62=[l62;length(find(Energyratio(numj,1)>0.6))];
+end
