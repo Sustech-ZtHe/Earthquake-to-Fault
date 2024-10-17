@@ -28,5 +28,3 @@ thetaticklabels({'S','SSE','ESE','E', 'ENE', 'NNE', 'N', 'NNW', ...
     'WNW', 'W', 'WSW',  'SSW',})
 set(gca,'LineWidth',1,'FontSize',12,'RLim',[0 uprlim],'GridColor',[0 0 0]);
 end
-% angle1=faia
-% angle2=faiu
