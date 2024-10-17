@@ -1,6 +1,4 @@
 function [R,C,scale,minPoi,Mc,na,hypo,hypo_out]=Detect_Region(name,PATH)
-    %current_file_path=mfilename('fullpath');
-   % [path,dirname]=fileparts(current_file_path)
     if strcmp(name, 'Toc2me')
        hypo = readtable([PATH,'/ToC2ME.txt']);
     elseif strcmp(name, 'chuannan')
@@ -84,29 +82,8 @@ function [R,C,scale,minPoi,Mc,na,hypo,hypo_out]=Detect_Region(name,PATH)
                                        1,2,3,4,9,10,11,12;
                                        5,6,7,8,13,14,15,16];scale=1;
     else
-%         R=[3,6,10];C=[13,14,15,16,17,18,19,20;
-%                                        1,2,3,4,9,10,11,12;
-%                                        5,6,7,8,13,14,15,16];scale=10;
         R=[3,6,10];C=[15,20,25,30,35,40,45,50;
                                        1,2,3,4,9,10,11,12;
                                        5,6,7,8,13,14,15,16];scale=50;
     end
 end
-
-% well1=table2array(readtable('/home/me/Documents/HOU3D-CODE/well-1.txt'));
-% well2=table2array(readtable('/home/me/Documents/HOU3D-CODE/well-2.txt'));
-% well3=table2array(readtable('/home/me/Documents/HOU3D-CODE/well-3.txt'));
-% well4=table2array(readtable('/home/me/Documents/HOU3D-CODE/well-4.txt'));
-
-% % figure;scatter3(table2array(hypo_out(:,3)),table2array(hypo_out(:,2)),table2array(hypo_out(:,4)),'filled','MarkerEdgeColor',[0.29 0.43 0.54],'MarkerFaceColor',[0.42 0.65 0.8]);
-% % ax=gca;set(ax,'Zdir','reverse');grid on;grid minor;box on;view(-50,0);zlim([2.5 4.5])
-% % histogram(hypo_out.Var11);
-
-% figure;scatter(table2array(hypo_out(:,3)),table2array(hypo_out(:,2)),table2array(hypo_out(:,11))) 
-% cc=table2array(hypo_out)
-% n=find(cc(:,11)==max(cc(:,11)));
-% cc(n,:)
-% hold on
-% scatter(cc(n,3),cc(n,2),cc(n,11),"red") 
-
-% figure;scatter3(table2array(hypo_out(:,3)),table2array(hypo_out(:,2)),table2array(hypo_out(:,4))) 
