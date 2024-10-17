@@ -65,8 +65,6 @@ elseif style==2
        subECC=ECC(numse);
        sumevents=[sumevents;sum(ECC(numse,4))];
        subER=Energyratio(numse);
-%        subER0=subER(subER<=1);
-%        subER1=size(subER(subER>1),1);
        [countse,edgese,numberse]=histcounts(subECC,[0,0.6,1]);
        [counter0,edgeer0,numberer0]=histcounts(subER,[0,up,1,1-up+1]);
        countse=flip(countse);
@@ -75,7 +73,6 @@ elseif style==2
 
        bar(edge(1)-0.025,countse(1),0.05,'FaceColor',[203 238 249]./255,'EdgeColor',[66 146 197]./255,'LineWidth',5);hold on;
        bar(edge(2)-0.025,counter0(1)+counter0(2),0.05,'FaceColor',[161 217 156]./255,'EdgeColor',[5 165 158]./255,'LineWidth',5)
-%            bar(edge(2)-0.025,subER1,0.05,'FaceColor',[153 0 0]./255,'EdgeColor',[255 0 0]./255,'LineWidth',3)
        set(gca,'XTickLabel',{['C=',num2str(C(1,1))],['C=',num2str(C(1,2))],['C=',num2str(C(1,3))],['C=',num2str(C(1,4))], ...
                             ['C=',num2str(C(1,5))],['C=',num2str(C(1,6))],['C=',num2str(C(1,7))],['C=',num2str(C(1,8))],''},'FontSize',30,'YMinorTick','on','LineWidth',2,'TickLength',[0.005 0.05], ...
            'YColor',[0 0 0],'XColor',[0 0 0]);
@@ -84,7 +81,6 @@ elseif style==2
 
        xlim([-0.075 1.475]);
        ylim([0 yup*1.5]);
-%        ylim([0 140]);
        ylabel('Number of faults','FontSize',30);
        box off
     end
