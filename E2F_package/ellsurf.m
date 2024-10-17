@@ -6,10 +6,7 @@ function ellsurf(ell,la0,lo0)
     ell(:,1) = lo0 + evlo_delta_longitude; % 计算对应的经度
     set(gcf, 'Renderer', 'opengl');
     for i=1:length(unique(ell(:,end)))
-%         figure
          num=find(ell(:,end)==i);
-%          k = boundary(ell(num,1:3));
-%          trisurf(k,abs(ell(num,1)),ell(num,2),ell(num,3),'Facecolor','red','FaceAlpha',0.1,'linestyle','none');hold on
          f=convhull(ell(num,1:3));
          patch('vertices',abs([ell(num,1:3)]), ...
                'faces',f,'facecolor','red','facealpha',0.1,'linestyle','none');hold on
