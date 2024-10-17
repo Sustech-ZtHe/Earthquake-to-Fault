@@ -25,7 +25,7 @@ current_file_path=mfilename('fullpath')
 PATH=[datapath,'/SaveData']
 
 set(0,'defaultfigurecolor','w')
-MODEL=1;LowerMag=2;MidMag=5;UpMag=7;
+MODEL=1;LowerMag=2;UpMag=7;
 RC=[];[R,C,s,minPoi,Mc,na,hypo,hypo_out]=Detect_Region('Toc2me',PATH);
 figure('Position', [100, 100, 1880, 1560]);
 subplot(4,6,[1 2 7 8 13 14 19 20])
@@ -37,25 +37,20 @@ xlim([min(min(table2array(hypo_out(:,3)))) max(max(table2array(hypo_out(:,3))))]
 ylim([min(min(table2array(hypo_out(:,2)))) max(max(table2array(hypo_out(:,2))))]);
 zlim([min(min(table2array(hypo_out(:,4)))) max(max(table2array(hypo_out(:,4))))]);
 set(gca,'ZDir','reverse','FontSize',20);view(-90,0);
-% view(0,90);
+
 subplot(4,6,[3 4 9 10]);histogram(table2array(hypo_out(:,11)));
 set(gca,'fontsize',15)
-find(hypo_out.Var11==max(hypo_out.Var11))
-% 
 hypotout=table2array(hypo);
 fdata = table2array(hypo_out);
 la0=min(hypo_out.Var2);lo0=min(hypo_out.Var3);
 evla = fdata(:,2);evlo = fdata(:,3);evdp = fdata(:,4);
 evlo_km = deg2km(distance([la0*ones(length(evla),1),evlo],[la0*ones(length(evla),1),lo0*ones(length(evla),1)]));
 evla_km = deg2km(distance([evla,lo0*ones(length(evla),1)],[la0*ones(length(evla),1),lo0*ones(length(evla),1)]));
-%Original Data - adjusted
 hypo_out_points=[evlo_km,evla_km,evdp,hypo_out.Var11,hypo_out.Var5,hypo_out.Var6,hypo_out.Var7,hypo_out.Var8,hypo_out.Var9,hypo_out.Var10];
-%3D Hough Transform
-% 
+%3D Hough Transform 
  path_parts=strsplit(datapath,'/');
  h3d_idex=find(strcmp(path_parts,'hough-3d-lines-master'),1)
  h3d_path=strjoin(path_parts(1:h3d_idex),'/')
-% % % your_path='/home/dell/文档/H3D/hough-3d-lines-master'  %your hough-3d-lines road
  filename_path=[num2str(h3d_path),'/data/fault_try.dat'];
   fopen(filename_path,'w');
   if exist([num2str(h3d_path),'/FaultSegment'],'dir')
@@ -66,7 +61,6 @@ hypo_out_points=[evlo_km,evla_km,evdp,hypo_out.Var11,hypo_out.Var5,hypo_out.Var6
 % % 
   dlmwrite(num2str(filename_path), hypo_out_points,'precision', 8);
   cd(num2str(h3d_path));
-%  % % command = './hough3dlines ./data/fault_try.dat > ./PredData/ToC2ME_fault_predict.txt';
   command = './hough3dlines ./data/fault_try.dat > ./FaultSegment/Fault_predict.txt';
   system(command)  
   f_sort=table2array(readtable([num2str(h3d_path),'/sp.output.txt']))
@@ -133,7 +127,7 @@ for j=1:4
     end
     HY_km=[];
 end
-% 
+ 
 sita=acos(sqrt(B(:,1).^2+B(:,2).^2))*180/pi;
 fai=real(asin(B(:,2)./cos(sita./180*pi))*180/pi);
 fai_m=median(fai);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
@@ -211,8 +205,6 @@ disp('Hough Finished')
 for i=1:size(MEDIAN0,1)
     guiyi1=max(pdist2(MEDIAN0(i,1:3),MEDIAN1(:,1:3)));
     guiyi2=max(MEDIAN0(i,5)./MEDIAN1(:,5));
-%     [d,idxmerge]=min(pdist2(MEDIAN0(i,1:3),MEDIAN1(:,1:3))./guiyi1+ ...
-%                      (MEDIAN0(i,5)./MEDIAN1(:,5)./guiyi2)');
     [d,idxmerge]=min(pdist2(MEDIAN0(i,1:3),MEDIAN1(:,1:3))./guiyi1);
     M1_cho=MEDIAN1(idxmerge,4);
     M1_color=find(f_sort(:,14)==M1_cho);
@@ -408,8 +400,6 @@ for j=1:8
     loglog(d1:dx:d2,10^-mi.*(d1:dx:d2),'LineWidth',1.5,'LineStyle',':','Color',[0 0 0]);
     ax=gca;
     set(ax,'FontSize',15,'XMinorTick','on','YMinorTick','off','TickLength',[0.02 0.1],'LineWidth',1);box on
-%     xlabel('Superposition of Mo')
-%     ylabel('Mo released by the ellipsoid')
     loglog(Moreal ,Motheo,'+','MarkerSize',8,'LineWidth',1.5);
     legend('RSM=1',['RSM=',num2str(1+mi/10)],['RSM=',num2str(1-mi/10)],'location','southeast','box','off');
     Energyratio=[Energyratio;log10(Motheo)./log10(Moreal),j.*ones(size(FR,1),1)];
@@ -422,25 +412,6 @@ for j=1:8
  xticks([10^7 10^11 10^15])
  yticks([10^2 10^11 10^20])
 end
-min(Moreal)
-min(Motheo)
-
-%To
-% xlim([10^7 10^15])
-% ylim([10^2 10^20])
-% xticks([10^7 10^11 10^15])
-% yticks([10^2 10^11 10^20])
-
-%Ok
-% xlim([10^10 10^16])
-% ylim([10^7 10^19])
-% xticks([10^10 10^13 10^16])
-% yticks([10^7 10^13 10^19])
-
-% xlim([10^12 10^20])
-% ylim([10^10 10^24])
-% xticks([10^12 10^16 10^20])
-% yticks([10^10 10^17 10^24])
 
 %% Azimuth
 figure('Position', [100, 100, 1880, 1560]);
