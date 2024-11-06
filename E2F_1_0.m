@@ -60,56 +60,56 @@ B=table2array(ab_output(:,4:6));
 
 %% DBSCAN  
 HY=[];L=[[15 21];[16 22];[17 23];[18 24]];NEvents=size(hypo_out_points,1);
-% for j=1:4
-%     n=0;HY_km=[];
-%     subplot(4,6,L(j,:))
-%     Points=hypo_out_points;
-%     if j==4
-%         MaxMag=max(Points(:,4));
-%         while 1
-%             IN=[];
-%             Mag=max(Points(:,4));
-%             if Mag>2 && Mag<7
-%                 k=5;
-%                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
-%             elseif Mag<2
-%                 k=1;
-%                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
-%             elseif Mag>7
-%                 k=10;
-%                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
-%             end
-%             dbs=dbscan(Points(:,1:3),radius,minPoi);
-%             if isempty(Mag) || all(dbs==-1)
-%                 break;
-%             end
-%             for i=1:max(dbs)
-%                 in=find(dbs==i);n=n+1;
-%                 rs=rand(1,3);
-%                 Points(in,11)=rs(1);Points(in,12)=rs(2);Points(in,13)=rs(3);Points(in,14)=n;
-%                 HY_km=[HY_km;Points(in,:)];
-%                 IN=[IN;in];       
-%             end
-%             Points(IN,:)=[];
-%             if isempty(Points)
-%                 break
-%             end
-%         end
-%         HY=KMtoDEG(HY_km,la0,lo0);
-%         Rmag=round(radius_model(MaxMag,LowerMag,UpMag,MODEL)*median(C(1,:)), 3);
-%         Scatter3_E2F(hypotout,HY,NEvents,[' \in = ',num2str(Rmag),'km'],0,1);
-%     else
-%         dbs=dbscan(Points(:,1:3),R(1,j),minPoi);
-%         for i=1:length(unique(dbs,'rows'))
-%             rs=rand(1,3);
-%             in=find(dbs==i);n=n+1;
-%             Points(in,11)=rs(1);Points(in,12)=rs(2);Points(in,13)=rs(3);Points(in,14)=n;
-%             HY_km=[HY_km;Points(in,:)];
-%         end
-%         HY=KMtoDEG(HY_km,la0,lo0);
-%         Scatter3_E2F(hypotout,HY,NEvents,['\in =',num2str(R(1,j)),' km'],0,1);
-%     end
-% end
+ for j=1:4
+     n=0;HY_km=[];
+     subplot(4,6,L(j,:))
+     Points=hypo_out_points;
+     if j==4
+         MaxMag=max(Points(:,4));
+         while 1
+             IN=[];
+             Mag=max(Points(:,4));
+             if Mag>2 && Mag<7
+                 k=5;
+                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
+             elseif Mag<2
+                 k=1;
+                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
+             elseif Mag>7
+                 k=10;
+                 radius=median(C(1,:))*0.001*power(10^(1.5*Mag+9.1)/(k^2*3*10^10/1000),1/3)/k;
+             end
+             dbs=dbscan(Points(:,1:3),radius,minPoi);
+             if isempty(Mag) || all(dbs==-1)
+                 break;
+             end
+             for i=1:max(dbs)
+                 in=find(dbs==i);n=n+1;
+                 rs=rand(1,3);
+                 Points(in,11)=rs(1);Points(in,12)=rs(2);Points(in,13)=rs(3);Points(in,14)=n;
+                 HY_km=[HY_km;Points(in,:)];
+                 IN=[IN;in];       
+             end
+             Points(IN,:)=[];
+             if isempty(Points)
+                 break
+             end
+         end
+         HY=KMtoDEG(HY_km,la0,lo0);
+         Rmag=round(radius_model(MaxMag,LowerMag,UpMag,MODEL)*median(C(1,:)), 3);
+         Scatter3_E2F(hypotout,HY,NEvents,[' \in = ',num2str(Rmag),'km'],0,1);
+     else
+         dbs=dbscan(Points(:,1:3),R(1,j),minPoi);
+         for i=1:length(unique(dbs,'rows'))
+             rs=rand(1,3);
+             in=find(dbs==i);n=n+1;
+             Points(in,11)=rs(1);Points(in,12)=rs(2);Points(in,13)=rs(3);Points(in,14)=n;
+             HY_km=[HY_km;Points(in,:)];
+         end
+         HY=KMtoDEG(HY_km,la0,lo0);
+         Scatter3_E2F(hypotout,HY,NEvents,['\in =',num2str(R(1,j)),' km'],0,1);
+     end
+ end
 
 
 %% Dip (sita) and Azimuth (fai) 
