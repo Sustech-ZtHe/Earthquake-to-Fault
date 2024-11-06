@@ -1,4 +1,4 @@
-function [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,MidMag,UpMag,MODEL)
+function [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,UpMag,MODEL)
 n=1;M1=0;M2=0;FE_km=[];
 % figure;
 for i=1:line_1(end)
@@ -22,7 +22,7 @@ for i=1:line_1(end)
                 M2=M2+1;
             end
             c=C(1,l);
-            radius=c*radius_model(Mag,LowerMag,MidMag,UpMag,MODEL);            
+            radius=c*radius_model(Mag,LowerMag,UpMag,MODEL);            
             [~,s4]=sort(ftest4(:,4),'descend');
             ftest4=ftest4(s4,:);
 
