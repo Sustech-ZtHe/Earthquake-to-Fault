@@ -19,11 +19,13 @@ Then
 2): Enter the Earthquake-to-fault-main, run the 'replayce.py'. 
 3): Setup hough-3d-lines 
   make
+4) Enter the ../H3D/hough-3d-lines-master/E2F_package and Run main code E2F_1_0.m 
 
 NOTE: 
 1. We recommended that 'eigen-3.4.0','hough-3d-lines-master' and 'E2F_package' be placed in the same directory.
 2. We have placed the test catalog (ToC2ME) on the path of '../E2F_package/SaveData/ToC2ME.txt', if you want use other catalog, the earthquake catalog arrangement format like: 
 # Event numbers | Year | Mon | Day | Hour | Minute | Second | Latitude | Longitude | Depth | Mag
+3. Chat with us on wechat (H-explorer) or send email (hezhengtao2001@163.com)
 
 Some promble maybe happen:
 *`GLIBCXX_3.4.29‘ not found 
