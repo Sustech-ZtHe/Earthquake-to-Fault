@@ -1,4 +1,4 @@
-function SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,MidMag,UpMag,MODEL,minPoi)
+function SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,UpMag,MODEL,minPoi)
 figure('Position', [100, 100, 880, 1560]); 
 colortemplate=rand(200,300);Kused=[];
 M1=0;M2=0;
@@ -27,7 +27,7 @@ for i=1:line_1(end)
                 M2=M2+1;
             end
             c=C(1,L);
-            radius=c*radius_model(Mag,LowerMag,MidMag,UpMag,MODEL);
+            radius=c*radius_model(Mag,LowerMag,UpMag,MODEL);
             [~,s4]=sort(ftest4(:,4),'descend');
             ftest4=ftest4(s4,:);
             idx_5=dbscan(ftest4(:,1:3),radius,minPoi);
