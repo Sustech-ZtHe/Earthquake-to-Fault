@@ -53,10 +53,6 @@ hypo_out_points=[evlo_km,evla_km,evdp,hypo_out.Var11,hypo_out.Var5,hypo_out.Var6
  h3d_path=strjoin(path_parts(1:h3d_idex),'/')
  filename_path=[num2str(h3d_path),'/data/fault_try.dat'];
   fopen(filename_path,'w');
-  if exist([num2str(h3d_path),'/FaultSegment'],'dir')
-      rmdir([num2str(h3d_path),'/FaultSegment'],'s');
-  end
- mkdir([num2str(h3d_path),'/FaultSegment']);
  fopen([num2str(h3d_path),'/FaultSegment/Fault_predict.txt'],'w')
 % % 
   dlmwrite(num2str(filename_path), hypo_out_points,'precision', 8);
@@ -112,7 +108,7 @@ for j=1:4
             end
         end
         HY=KMtoDEG(HY_km,la0,lo0);
-        Rmag=round(radius_model(MaxMag,LowerMag,MidMag,UpMag,MODEL)*median(C(1,:)), 3);
+        Rmag=round(radius_model(MaxMag,LowerMag,UpMag,MODEL)*median(C(1,:)), 3);
         Scatter3_E2F(hypotout,HY,NEvents,[' \in = ',num2str(Rmag),'km'],0,1);
     else
         dbs=dbscan(Points(:,1:3),R(1,j),minPoi);
@@ -272,7 +268,7 @@ for l=1:8
                 Ns=(log10(size(ftest4,1))-a)/b+Mc;
                 Mag=max(MaxMag,CauMag);
                 c=C(1,l);
-                radius=c*radius_model(Mag,LowerMag,MidMag,UpMag,MODEL);
+                radius=c*radius_model(Mag,LowerMag,UpMag,MODEL);
 
                 [~,s4]=sort(ftest4(:,4),'descend');
                 ftest4=ftest4(s4,:);
@@ -320,7 +316,7 @@ figure('Position', [100, 100, 1880, 1560]);number_EPC=[];number_Eve=[];ECC=[];
 ratio=[1;1;1];Azimuth=[];Elevation=[];FaultpaRameters=[];Magrecord=[];
 for l=1:8  
     subplot(4,4,[C(2,l),C(3,l)])
-    [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,MidMag,UpMag,MODEL);
+    [FE_km,FE]=zdHouDBS(C,l,f_sort,line_1,line_nums_2,la0,lo0,minPoi,Mc,hypotout,colortemplate,LowerMag,UpMag,MODEL);
     EP=[];EP_km=[];X=[];Y=[];Z=[];n=0;ell=[];
     line_e=unique(FE(:,end));
     for i=1:length(line_e)
@@ -361,7 +357,7 @@ disp('Fitting Finished')
  
 %% Subsurface fault
 L=4;
-SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,MidMag,UpMag,MODEL,minPoi)
+SUBfault_con(L,C,f_sort,line_1,line_nums_2,hypotout,FaultpaRameters,Mc,LowerMag,UpMag,MODEL,minPoi)
 
 %% RSM
 figure('Position', [100, 100, 1880, 1560]);Energyratio=[];
