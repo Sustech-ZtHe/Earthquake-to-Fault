@@ -6,6 +6,7 @@ h3d_road=f"{dir_path}/hough-3d-lines-master"
 fault_road=f"{h3d_road}/FaultSegment"
 e2f_road=f"{dir_path}/Earthquake-to-Fault-main"
 e2fpackage_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_package"
+e2fmain_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_1_0.m"
 os.makedirs(fault_road, exist_ok=True)
 # 源文件路径
 #origin_h3d_main= "/your_hough-3d-line_road/hough3dlines.cpp"
@@ -30,3 +31,4 @@ shutil.copyfile(replace_vector3d, origin_vector3d)
 shutil.copyfile(replace_vector3d_h, origin_vector3d_h)
 
 shutil.move(e2fpackage_road,h3d_road)
+shutil.move(e2fmain_road,h3d_road)
