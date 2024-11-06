@@ -3,7 +3,7 @@ import os
 current_path=os.getcwd()
 dir_path=os.path.dirname(current_path)
 h3d_road=f"{dir_path}/hough-3d-lines-master"
-fault_road=f"{dir_path}/hough-3d-lines-master/FaultSegment"
+fault_road=f"{h3d_path}/FaultSegment"
 e2f_road=f"{dir_path}/Earthquake-to-Fault-main"
 e2fpackage_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_package"
 os.makedirs(fault_road, exist_ok=True)
