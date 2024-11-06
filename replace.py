@@ -3,8 +3,10 @@ import os
 current_path=os.getcwd()
 dir_path=os.path.dirname(current_path)
 h3d_road=f"{dir_path}/hough-3d-lines-master"
+fault_road=f"{dir_path}/hough-3d-lines-master/FaultSegment"
 e2f_road=f"{dir_path}/Earthquake-to-Fault-main"
 e2fpackage_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_package"
+os.makedirs(fault_road, exist_ok=True)
 # 源文件路径
 #origin_h3d_main= "/your_hough-3d-line_road/hough3dlines.cpp"
 #origin_pointcloud= "/your_hough-3d-line_road/pointcloud.cpp"
