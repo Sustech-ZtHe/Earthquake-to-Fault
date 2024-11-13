@@ -1,10 +1,8 @@
 clear all;clc
-addpath('/home/me/Documents/E2F/H3D/hough-3d-lines-master/E2F_package/')
+%addpath('/home/me/Documents/E2F/H3D/hough-3d-lines-master/E2F_package/') your_E2F_package_path/
 %% EARTHQUAKE CATALOGUE
-%file_path='/home/me/Documents/E2F/H3D/hough-3d-lines-master/E2F_package/SaveData/wy_catalog_s1.dat'
-%file_path='/home/me/Documents/H3D/hough-3d-lines-master/OriData/Magcatalog/XFJ/XFJ_Mag_Clustered_dtcc_1.txt'
-%file_path='/home/me/Documents/E2F/H3D/hough-3d-lines-master/E2F_package/SaveData/ToC2ME.txt'
-%%
+%file_path='/home/me/Documents/E2F/H3D/hough-3d-lines-master/E2F_package/SaveData/ToC2ME.txt' your_Earthquake_Catalogue_path/
+
 set(0,'defaultfigurecolor','w')
 MODEL=1;LowerMag=2;UpMag=7;
 RC=[];[R,C,s,minPoi,Mc,na,hypo]=Detect_Region(file_path);
