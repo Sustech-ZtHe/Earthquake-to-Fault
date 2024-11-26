@@ -5,7 +5,6 @@ E2F is based on the matlab framework, the main program is E2F_1_0.m, the toolbox
 1.Mapping Toolbox
 2.Machine Learning Toolbox 
 3.Optimization Toolbox
-4.Text Analytics Toolbox
 
 How to start? 
 *Install the hough-3d-lines (https://github.com/cdalitz/hough-3d-lines)
