@@ -19,7 +19,8 @@ Then
 2): Enter the Earthquake-to-fault-main, run the 'replayce.py'. 
 3): Setup hough-3d-lines 
   make
-4) Enter the ../H3D/hough-3d-lines-master and Run main code E2F_1_0.m 
+4) Enter the "../H3D/hough-3d-lines-master" and Add the path of “../H3D/hough-3d-lines-master/E2F_package” and its subpaths
+5) Run E2F_v1.m 
 
 NOTE: 
 1. We recommended that 'eigen-3.4.0','hough-3d-lines-master' and 'E2F_package' be placed in the same directory.
