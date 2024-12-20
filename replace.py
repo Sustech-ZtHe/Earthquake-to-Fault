@@ -6,7 +6,8 @@ h3d_road=f"{dir_path}/hough-3d-lines-master"
 fault_road=f"{h3d_road}/OutputFile"
 e2f_road=f"{dir_path}/Earthquake-to-Fault-main"
 e2fpackage_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_package"
-e2fmain_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.m"
+e2fgui_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.m"
+e2fguifig_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.fig"
 os.makedirs(fault_road, exist_ok=True)
 
 # origin file road
@@ -30,5 +31,7 @@ shutil.copyfile(replace_pointcloud, origin_pointcloud)
 shutil.copyfile(replace_vector3d, origin_vector3d)
 shutil.copyfile(replace_vector3d_h, origin_vector3d_h)
 
+#move GUI and .fig
 shutil.move(e2fpackage_road,h3d_road)
-shutil.move(e2fmain_road,h3d_road)
+shutil.move(e2fgui_road,h3d_road)
+shutil.move(e2fguifig_road,h3d_road)
