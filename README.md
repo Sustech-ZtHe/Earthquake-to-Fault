@@ -14,8 +14,8 @@ How to start?
 Then  
 1): Setup the Eigen (C++ library) at first  
   1.1 mkdir build  
-      cd build
-      cmake ..
+      cd build  
+      cmake ..  
   1.2 Enter the hough-3d-lines-master, find Makefile and change the road of 'LIBEIGEN='usr/include/eigen3' like 'LIBEIGEN='your_H3D_place/eigen-3.4.0'
 2): Enter the Earthquake-to-fault-main, run the 'replayce.py'. 
 3): Setup hough-3d-lines 
