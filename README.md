@@ -16,11 +16,11 @@ Then
   1.1 mkdir build  
       cd build  
       cmake ..  
-  1.2 Enter the hough-3d-lines-master, find Makefile and change the road of 'LIBEIGEN='usr/include/eigen3' like 'LIBEIGEN='your_H3D_place/eigen-3.4.0'
-2): Enter the Earthquake-to-fault-main, run the 'replayce.py'. 
-3): Setup hough-3d-lines 
-  make
-4) Add the 'E2F_package' into the MATLAB road
+  1.2 Enter the hough-3d-lines-master, find Makefile and change the road of 'LIBEIGEN='usr/include/eigen3' like 'LIBEIGEN='your_H3D_place/eigen-3.4.0'  
+2): Enter the Earthquake-to-fault-main, run the 'replayce.py'.  
+3): Setup hough-3d-lines  
+  make  
+4) Add the 'E2F_package' into the MATLAB road  
 5) Run the main project E2F_v1.m 
 
 NOTE: 
