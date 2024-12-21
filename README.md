@@ -28,7 +28,7 @@ NOTE:
 2. We have placed the test catalog (ToC2ME) on the path of '..Catalog_example/ToC2ME.txt', if you want use other catalog, the earthquake catalog arrangement format like: 
 # Event numbers | Year | Mon | Day | Hour | Minute | Second | Latitude | Longitude | Depth | Mag
 
-Some promble maybe happen:
+**Some promble maybe happen:**  
 1.If you some problem like "GLIBCXX_3.4.29 not found" when open the E2F_v1 and run 'Catalog File'.  
   This is because your MATLAB lacks a patch of 'GLIBCXX_3.4.29' ro tun hough-3d-lines.  
   You could run 'strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX' in terminal if it contains 'GLIBCXX_3.4.29'.  
