@@ -155,6 +155,16 @@ histogram(mag,'FaceColor',[255 153 51]./255,'EdgeColor',[204 102 0]./255,'LineWi
 xlabel(ax2,'Magnitude');ylabel(ax2,'Counts')
 set(ax2,'fontsize',12,'LineWidth',1.5);
 
+figure('Position', [100, 100, 880, 860]);
+axf=gca;
+scatter3(evlo,evla,depth,power(exp(mag),1/5),'filled','MarkerEdgeColor',[153/255 0 0],'MarkerFaceColor',[255/255 51/255 51/255]);
+view(-30,60);
+xlim([min(evlo) max(evlo)]);xlabel(ax1,'Easting (km)')
+ylim([min(evla) max(evla)]);ylabel(ax1,'Northing (km)')
+zlim([min(depth) max(depth)]);zlabel(ax1,'Depth (km)')
+set(axf,'ZDir','reverse','FontSize',15,'Color',[0.9 0.9 0.9],'LineWidth',1.5,'box','on','XGrid','off','YGrid','off','ZGrid','off');
+% axis('equal')
+
 % --- Executes on button press in run_MODE1.
 function run_MODE1_Callback(hObject, eventdata, handles)
 global fai_MODE
@@ -163,7 +173,6 @@ if (get(hObject,'Value') == get (hObject,'Max'))
 else
     fai_MODE=2;
 end
-
 
 function PBAD_Multiple_edit_Callback(hObject, eventdata, handles)
 global PBAD_Multiple main_fnum
