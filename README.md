@@ -32,7 +32,7 @@ NOTE:
 1.If you some problem like "GLIBCXX_3.4.29 not found" when open the E2F_v1 and run 'Catalog File'.  
   This is because your MATLAB lacks a patch of 'GLIBCXX_3.4.29' ro tun hough-3d-lines.  
   You could run 'strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX' in terminal if it contains 'GLIBCXX_3.4.29'.  
-  Try running 'sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6' your_matlab_path/libstdc++.so.6 '.
+  Try running 'sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 your_matlab_path/libstdc++.so.6 '.
   
 
 ![Toc2_v1](https://github.com/user-attachments/assets/f86fbd3b-80e5-418f-acb2-c3cf0a2c2aed)
