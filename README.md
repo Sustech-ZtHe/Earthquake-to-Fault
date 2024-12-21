@@ -33,6 +33,7 @@ Some promble maybe happen:
   You could run 'strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX' in terminal if it contains 'GLIBCXX_3.4.29'. 
   Try running 'sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6' your_matlab_path/libstdc++.so.6 '.
   
-![image](https://github.com/user-attachments/assets/28cee59a-2ecd-4ad7-8986-cfe2d76a7d4c)
+![Uploading Toc2_v1.jpg…]()
+
 
 Chat with us on wechat (H-explorer) or send email (hezhengtao2001@163.com)
