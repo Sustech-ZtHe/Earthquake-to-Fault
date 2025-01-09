@@ -41,7 +41,7 @@ NOTE:
 ![image](https://github.com/user-attachments/assets/3ef4ca6b-147e-4a26-b9d6-42040179623d)
 
 **Fault_Segment_Modeling.txt**  
-ID	Longitude	latitude	Depth	Ellipsoid major axis endpoint 1 (x,y,z)			Ellipsoid major axis endpoint 2 (x,y,z)			Ellipsoid short axis endpoint 1 (x,y,z)			Ellipsoid short axis endpoint 2 (x,y,z)			azimuth	dip	Optimal C	event counts  
+Cluster_ID	Longitude	latitude	Depth	Ellipsoid major axis endpoint 1 (x,y,z)			Ellipsoid major axis endpoint 2 (x,y,z)			Ellipsoid short axis endpoint 1 (x,y,z)			Ellipsoid short axis endpoint 2 (x,y,z)			azimuth	dip	Optimal_C	event_counts  
 1	-117.23907	54.345996	3.385	1.064622	1.8523537	3.4479885	0.7242967	1.2657225	3.3227733	0.88352774	1.5537361	3.4399321	0.90539098	1.5643402	3.3308297	30.119521	78.720259	3.5	4445
 ![image](https://github.com/user-attachments/assets/6a1531e9-fdc7-40bc-905c-cb0c25cad9cc)
 
