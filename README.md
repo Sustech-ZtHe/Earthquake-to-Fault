@@ -37,5 +37,12 @@ NOTE:
 
 ![Toc2_v1](https://github.com/user-attachments/assets/f86fbd3b-80e5-418f-acb2-c3cf0a2c2aed)
 
+# OutPut File  
+**Fault_Segment_Modeling.txt**  
+ID	Longitude	latitude	Depth	Ellipsoid major axis endpoint 1 (x,y,z)			Ellipsoid major axis endpoint 2 (x,y,z)			Ellipsoid short axis endpoint 1 (x,y,z)			Ellipsoid short axis endpoint 2 (x,y,z)			azimuth	dip	Optimal C	event counts
+1	-117.23907	54.345996	3.385	1.064622	1.8523537	3.4479885	0.7242967	1.2657225	3.3227733	0.88352774	1.5537361	3.4399321	0.90539098	1.5643402	3.3308297	30.119521	78.720259	3.5	4445
+![image](https://github.com/user-attachments/assets/6a1531e9-fdc7-40bc-905c-cb0c25cad9cc)
+
+
 
 Chat with us on wechat (H-explorer) or send email (hezhengtao2001@163.com)
