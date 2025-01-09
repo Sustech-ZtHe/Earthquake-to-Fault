@@ -25,7 +25,7 @@ Then
 
 NOTE: 
 1. We recommended that 'eigen-3.4.0','hough-3d-lines-master' and 'E2F_package' be placed in the same directory.
-2. We have placed the test catalog (ToC2ME) on the path of '..Catalog_example/ToC2ME.txt', if you want use other catalog, the earthquake catalog arrangement format like: 
+2. We have placed the test catalog (ToC2ME) on the path of '..Catalog_example/ToC2ME.txt', if you want use other catalog, the earthquake catalog arrangement format like:  
 **ID | Year | Mon | Day | Hour | Minute | Second | Latitude | Longitude | Depth | Magnitude**
 
 **Some promble maybe happen:**  
