@@ -841,7 +841,7 @@ fopen([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'],'w');
 dlmwrite([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'], FE,'delimiter', ' ','precision', 8); % 将A写入指定文件，元素间默认以逗号分隔
 disp(['Has Written in ',[currentPath,'/OutputFile/Fault_Segment_Clusterd.txt']])
 fopen([currentPath,'/OutputFile/Fault_Segment_Modeling.txt'],'w');
-Fault_Segment_Modeling=[FaultpaRameters(:,31),FaultpaRameters(:,1:3),FaultpaRameters(:,7:18),FaultpaRameters(:,25:27),FaultpaRameters(:,29:30)];
+Fault_Segment_Modeling=[FaultpaRameters(:,31),FaultpaRameters(:,1:3),FaultpaRameters(:,7:18),FaultpaRameters(:,25:26),FaultpaRameters(:,29:30)];
 dlmwrite([currentPath,'/OutputFile/Fault_Segment_Modeling.txt'], Fault_Segment_Modeling,'delimiter', ' ','precision', 8); % 将A写入指定文件，元素间默认以逗号分隔
 disp(['Has Written in ',[currentPath,'/OutputFile/Fault_Segment_Modeling.txt']])
 
