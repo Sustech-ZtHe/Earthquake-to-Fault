@@ -39,8 +39,6 @@ NOTE:
 ![Toc2_v1](https://github.com/user-attachments/assets/f86fbd3b-80e5-418f-acb2-c3cf0a2c2aed)
 
 # Output File  
-![image](https://github.com/user-attachments/assets/3ef4ca6b-147e-4a26-b9d6-42040179623d)
-
 **Fault_Segment_Clustered.txt**  
 #1 Event Longitude  
 #2 Event Latitude  
