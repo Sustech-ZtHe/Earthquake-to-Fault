@@ -41,14 +41,28 @@ NOTE:
 # Output File  
 ![image](https://github.com/user-attachments/assets/3ef4ca6b-147e-4a26-b9d6-42040179623d)
 
-**Fault_Segment_Modeling.txt**  
-Cluster_ID	Longitude	latitude	Depth	Ellipsoid major axis endpoint 1 (x,y,z)			Ellipsoid major axis endpoint 2 (x,y,z)			Ellipsoid short axis endpoint 1 (x,y,z)			Ellipsoid short axis endpoint 2 (x,y,z)			azimuth	dip	Optimal_C	event_counts  
-1	-117.23907	54.345996	3.385	1.064622	1.8523537	3.4479885	0.7242967	1.2657225	3.3227733	0.88352774	1.5537361	3.4399321	0.90539098	1.5643402	3.3308297	30.119521	78.720259	3.5	4445
-![image](https://github.com/user-attachments/assets/6a1531e9-fdc7-40bc-905c-cb0c25cad9cc)
-
 **Fault_Segment_Clustered.txt**  
-Longitude	latitude	Depth Magnitude Year Month Day Hour Minute Second R G B Cluster_ID  
--117.23937 54.345699 3.41 0.36 2016 11 5 19 5 54.8 0.33 0.57 0.29 1
+#1 Event Longitude  
+#2 Event Latitude  
+#3 Depth  
+#4 Magnitude  
+#5-10 Year Month Day Hour Minute Second  
+#11-13 R G B  
+#14 Fault ID  
+-117.239 54.3457 3.41 0.36 2016 11 5 19 5 54.8 0.814724 0.153814 0.436224 1  
+
+**Fault_Segment_Modeling.txt**  
+#1 Fault ID  
+#2-4 Centroid X (km) Centroid Y (km) Centroid Z (km)  
+#5-7 Major Axis Upper Endpoint X (km) Major Axis Upper Endpoint Y (km) Major Axis Upper Endpoint Z (km)  
+#8-10 Major Axis Lower Endpoint X (km) Major Axis Lower Endpoint Y (km) Major Axis Lower Endpoint Z (km)  
+#11-13 Intermediate Axis Upper Endpoint X (km) Intermediate Axis Upper Endpoint Y (km) Intermediate Axis Upper Endpoint Z (km)  
+#14-16 Intermediate Axis Lower Endpoint X (km) Intermediate Axis Lower Endpoint Y (km) Intermediate Axis Lower Endpoint Z (km)  
+#17 Strike (deg)  
+#18 Dip Angle (deg)  
+#19 Optimal C Value  
+#20 Number of Events constituting the fault  
+1 0.909659 1.57908 3.385 1.03479 1.81128 3.45246 0.753679 1.30613 3.31802 0.886865 1.54966 3.43464 0.901604 1.56775 3.33584 29.0955 81.6512 3.5 4489  
 
 
 Chat with us on wechat (H-explorer) or send email (hezhengtao2001@163.com)
