@@ -32,9 +32,9 @@ NOTE:
 1.If you some problem like "GLIBCXX_3.4.29 not found" when open the E2F_v1 and run 'Catalog File'.  
   This issue occurs because your MATLAB environment lacks the required version of GLIBCXX_3.4.29, which is necessary to run hough-3d-lines.  
   You can check if your system has this version by running the following command in the terminal:  
-    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4.29  
+    *strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4.29*  
   If the required version is available, try copying the library to the MATLAB directory by running:  
-    sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 your_matlab_path/libstdc++.so.6  
+    *sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 your_matlab_path/libstdc++.so.6*  
 
 ![Toc2_v1](https://github.com/user-attachments/assets/f86fbd3b-80e5-418f-acb2-c3cf0a2c2aed)
 
