@@ -63,4 +63,4 @@ NOTE:
 1 0.909659 1.57908 3.385 1.03479 1.81128 3.45246 0.753679 1.30613 3.31802 0.886865 1.54966 3.43464 0.901604 1.56775 3.33584 29.0955 81.6512 3.5 4489  
 
 
-Chat with us on wechat (H-explorer) or send email (hezhengtao2001@163.com)
+Feel free to contact us on WeChat (H-explorer) or via email (hezhengtao2001@163.com).
