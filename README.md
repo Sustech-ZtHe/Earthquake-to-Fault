@@ -14,13 +14,13 @@ How to start?
 *Let the three zips (hough-3d-lines-master, eigen-3.4.0, Earthquake-to-fault-main) be placed in a directory such as 'E2F'.  
 Then  
 1): Setup the Eigen (C++ library) at first  
-  1.1 mkdir build  
-      cd build  
-      cmake ..  
-  1.2 Enter the hough-3d-lines-master, find Makefile and change the road of 'LIBEIGEN='usr/include/eigen3' like 'LIBEIGEN='your_H3D_place/eigen-3.4.0'  
+&nbsp;&nbsp;1.1 mkdir build  
+&nbsp;&nbsp;&nbsp;&nbsp;cd build  
+&nbsp;&nbsp;&nbsp;&nbsp;cmake ..  
+&nbsp;&nbsp;1.2 Enter the hough-3d-lines-master, find Makefile and change the road of 'LIBEIGEN='usr/include/eigen3' like 'LIBEIGEN='your_H3D_place/eigen-3.4.0'  
 2): Enter the Earthquake-to-fault-main, run the 'replayce.py'.  
 3): Setup hough-3d-lines  
-  make  
+&nbsp;&nbsp;make  
 4) Run the main script is E2F_V1.m, and add the 'E2F_package' folder to the MATLAB path 
 
 NOTE: 
