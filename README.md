@@ -1,5 +1,5 @@
 E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5  
-The main program is E2F_V1.m  
+The main script is E2F_V1.m  
 # Earthquake-to-Fault  
 This is a self-adaptive fault detection tool from high-precision earthquake catalog based on Hough transform  
 The E2F (Earthquake-to-Fault) is released and maintained at https://github.com/Sustech-ZtHe/Earthquake-to-Fault  
@@ -21,8 +21,7 @@ Then
 2): Enter the Earthquake-to-fault-main, run the 'replayce.py'.  
 3): Setup hough-3d-lines  
   make  
-4) Add the 'E2F_package' into the MATLAB road  
-5) Run the main project E2F_v1.m 
+4) Run the main script is E2F_V1.m, and add the 'E2F_package' folder to the MATLAB path 
 
 NOTE: 
 1. We recommended that 'eigen-3.4.0','hough-3d-lines-master' and 'E2F_package' be placed in the same directory.
@@ -31,10 +30,11 @@ NOTE:
 
 **Some promble maybe happen:**  
 1.If you some problem like "GLIBCXX_3.4.29 not found" when open the E2F_v1 and run 'Catalog File'.  
-  This is because your MATLAB lacks a patch of 'GLIBCXX_3.4.29' to run hough-3d-lines.  
-  You could run 'strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX' in terminal if it contains 'GLIBCXX_3.4.29'.  
-  **Try running 'sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 your_matlab_path/libstdc++.so.6 '.**
-  
+  This issue occurs because your MATLAB environment lacks the required version of GLIBCXX_3.4.29, which is necessary to run hough-3d-lines.  
+  You can check if your system has this version by running the following command in the terminal:  
+    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX_3.4.29  
+  If the required version is available, try copying the library to the MATLAB directory by running:  
+    sudo cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 your_matlab_path/libstdc++.so.6  
 
 ![Toc2_v1](https://github.com/user-attachments/assets/f86fbd3b-80e5-418f-acb2-c3cf0a2c2aed)
 
