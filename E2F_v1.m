@@ -704,17 +704,17 @@ end
 
 % --- Executes on button press in Fault_Model.
 function Fault_Model_Callback(hObject, eventdata, handles)
-global Optimal_C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate Optimal_FaultParameters
+global Optimal_C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate Optimal_FaultParameters FE_deg_O
 if isempty(line_nums_2)
         error('Run Classify first')
 end
 figure('Position', [100, 100, 880, 960]); 
 Optimal_FaultParameters=[];
-[MaxMw,FE_km,FE_deg]=zdHouDBS(Optimal_C,1,f_sort_E2F,line_nums_2,la0,lo0,minPoi,hypo,colortemplate);
-line_e=unique(FE_deg(:,end));
+[MaxMw,FE_km,FE_deg_O]=zdHouDBS(Optimal_C,1,f_sort_E2F,line_nums_2,la0,lo0,minPoi,hypo,colortemplate);
+line_e=unique(FE_deg_O(:,end));
 for i=1:length(line_e)
-   line_nums_e(i,1)=find(ismember(FE_deg(:,end),line_e(i,1),'rows'),1);
-   line_nums_e(i,2)=find(ismember(FE_deg(:,end),line_e(i,1),'rows'),1,'last')+1;
+   line_nums_e(i,1)=find(ismember(FE_deg_O(:,end),line_e(i,1),'rows'),1);
+   line_nums_e(i,2)=find(ismember(FE_deg_O(:,end),line_e(i,1),'rows'),1,'last')+1;
    line_nums_e(i,3)=line_e(i,1);
 end
 for i=1:length(line_e)
@@ -734,7 +734,7 @@ end
 
 % --- Executes on button press in out_file.
 function out_file_Callback(hObject, eventdata, handles)
-global currentPath FE_deg Optimal_FaultParameters
+global currentPath FE_deg_O Optimal_FaultParameters
 header = {
     '#1 Event Longitude',...
     '#2 Event Latitude',...
@@ -749,7 +749,7 @@ for i=1:length(header)
     fprintf(fileID, '%s\n', header{i}); 
 end
 fclose(fileID);
-dlmwrite([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'], FE_deg,'delimiter', ' ','precision', 6, '-append'); % 将A写入指定文件，元素间默认以逗号分隔
+dlmwrite([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'], FE_deg_O,'delimiter', ' ','precision', 6, '-append'); % 将A写入指定文件，元素间默认以逗号分隔
 disp(['Has Written in ',[currentPath,'/OutputFile/Fault_Segment_Clusterd.txt']])
 
 header = {
