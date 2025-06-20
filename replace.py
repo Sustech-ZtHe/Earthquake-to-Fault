@@ -12,10 +12,6 @@ e2fguifig_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.fig"
 os.makedirs(fault_road, exist_ok=True)
 
 # origin file road
-#origin_h3d_main= "/your_hough-3d-line_road/hough3dlines.cpp"
-#origin_pointcloud= "/your_hough-3d-line_road/pointcloud.cpp"
-#origin_vector3d= "/your_hough-3d-line_road/vector3d.cpp"
-#origin_vector3d_h= "/your_hough-3d-line_road/vector3d.h"
 origin_h3d_main= f"{h3d_road}/hough3dlines.cpp"
 origin_pointcloud= f"{h3d_road}/pointcloud.cpp"
 origin_vector3d= f"{h3d_road}/vector3d.cpp"
