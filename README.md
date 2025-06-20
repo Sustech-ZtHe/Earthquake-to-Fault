@@ -40,9 +40,9 @@ NOTE:
 
 # Output File  
 **Fault_Segment_Clustered.txt**  
-#1 Event Longitude  
-#2 Event Latitude  
-#3 Depth  
+#1 Event Easting (km)  
+#2 Event Northing (km)  
+#3 Depth (km)
 #4 Magnitude  
 #5-10 Year Month Day Hour Minute Second  
 #11-13 R G B  
