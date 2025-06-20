@@ -736,8 +736,8 @@ end
 function out_file_Callback(hObject, eventdata, handles)
 global currentPath FE_deg_O Optimal_FaultParameters
 header = {
-    '#1 Event Longitude',...
-    '#2 Event Latitude',...
+    '#1 Event Easting (km)',...
+    '#2 Event Northing (km)',...
     '#3 Depth',...
     '#4 Magnitude',...
     '#5-10 Year Month Day Hour Minute Second',...
@@ -749,7 +749,13 @@ for i=1:length(header)
     fprintf(fileID, '%s\n', header{i}); 
 end
 fclose(fileID);
-dlmwrite([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'], FE_deg_O,'delimiter', ' ','precision', 6, '-append'); % 将A写入指定文件，元素间默认以逗号分隔
+
+FE_km_O=FE_deg_O;
+evlo=FE_km_O(:, 1);evla=FE_km_O(:, 2);
+FE_km_O(:, 1) = deg2km(distance([la0 * ones(length(evla), 1), evlo], [la0 * ones(length(evla), 1), lo0 * ones(length(evla), 1)]));
+FE_km_O(:, 2) = deg2km(distance([evla, lo0 * ones(length(evla), 1)], [la0 * ones(length(evla), 1), lo0 * ones(length(evla), 1)]));
+
+dlmwrite([currentPath,'/OutputFile/Fault_Segment_Clusterd.txt'], FE_km_O,'delimiter', ' ','precision', 6, '-append'); % 将A写入指定文件，元素间默认以逗号分隔
 disp(['Has Written in ',[currentPath,'/OutputFile/Fault_Segment_Clusterd.txt']])
 
 header = {
