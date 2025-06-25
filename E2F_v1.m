@@ -734,7 +734,7 @@ end
 
 % --- Executes on button press in out_file.
 function out_file_Callback(hObject, eventdata, handles)
-global currentPath FE_deg_O Optimal_FaultParameters
+global currentPath FE_deg_O Optimal_FaultParameters la0 lo0
 header = {
     '#1 Event Easting (km)',...
     '#2 Event Northing (km)',...
