@@ -20,9 +20,9 @@ if strike>180
 elseif strike<0
     strike=strike+180;
 end
-n = cross(V_a, V_c); 
-dip = atan2(norm(cross(n, [1, 0, 0])), dot(n, [1, 0, 0]));
-dip = dip * 180 / pi; 
+n = cross(V_a, V_b);
+dip = acos(abs(n(3)) / norm(n));  
+dip = dip * 180 / pi;
 if dip>90
     dip=180-dip;
 end
