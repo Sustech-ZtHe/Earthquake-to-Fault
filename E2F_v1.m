@@ -116,7 +116,7 @@ evla = hypo(:,8);evlo = hypo(:,9);evdp = hypo(:,10);
 evlo_km = deg2km(distance([la0*ones(length(evla),1),evlo],[la0*ones(length(evla),1),lo0*ones(length(evla),1)]));
 evla_km = deg2km(distance([evla,lo0*ones(length(evla),1)],[la0*ones(length(evla),1),lo0*ones(length(evla),1)]));
 % Spatial Location
-figure('Position', [100, 100, 880, 860]);
+figure('Position', [50, 20, 880, 860]);
 ax1=axes('Position', [0.1, 0.4, 0.6, 0.5]);
 scatter3(evlo_km,evla_km,depth,power(exp(mag),1/5),'filled','MarkerEdgeColor',[153/255 0 0],'MarkerFaceColor',[255/255 51/255 51/255]);
 xlim(ax1,[min(evlo_km) max(evlo_km)]);xlabel('Easting (km)')
@@ -198,20 +198,39 @@ if isempty(fai_MODE)
 end
 hypo_out_points=[evlo_km,evla_km,evdp,mag,hypo(:,2),hypo(:,3),hypo(:,4),hypo(:,5),hypo(:,6),hypo(:,7)];
 % 3D Hough Transform - Write Hough Transform Result to 'fault_try.dat'
+
 currentPath = pwd;
-fault_try_path=[currentPath,'/hough-3d-lines-master/data/fault_try.dat'];
-fopen(fault_try_path,'w');
-dlmwrite(num2str(fault_try_path), hypo_out_points,'precision', 8);
-command = './hough-3d-lines-master/hough3dlines ./hough-3d-lines-master/data/fault_try.dat ';
-system(command);
-f_sort=load([num2str(currentPath),'/hough-3d-lines-master/sp.output.txt']);
-for i=1:f_sort(end)
-   indices = find(f_sort(:,end) == i);
-   line_nums_1(i,1)=indices(1);
-   line_nums_1(i,2)=indices(end);
+% 判断系统平台
+if ispc
+    sep = '\';
+    exe = '.\hough-3d-lines-master\hough3dlines.exe';
+    sp_path = [currentPath, '\hough-3d-lines-master\sp.output.txt'];
+    ab_path = [currentPath, '\hough-3d-lines-master\ab.output.txt'];
+    dat_path = [currentPath, '\hough-3d-lines-master\data\fault_try.dat'];
+else
+    sep = '/';
+    exe = './hough-3d-lines-master/hough3dlines';
+    sp_path = [currentPath, '/hough-3d-lines-master/sp.output.txt'];
+    ab_path = [currentPath, '/hough-3d-lines-master/ab.output.txt'];
+    dat_path = [currentPath, '/hough-3d-lines-master/data/fault_try.dat'];
 end
-disp(['lines: ',num2str(line_nums_1(:,1)')])
-ab_output=load([num2str(currentPath),'/hough-3d-lines-master/ab.output.txt']);
+% 写入 fault_try.dat
+fopen(dat_path, 'w');
+dlmwrite(dat_path, hypo_out_points, 'precision', 8);
+% 调用 hough3dlines
+command = [exe, ' ', dat_path];
+system(command);
+% 读取输出结果
+f_sort = load(sp_path);
+for i = 1:f_sort(end)
+    indices = find(f_sort(:,end) == i);
+    line_nums_1(i,1) = indices(1);
+    line_nums_1(i,2) = indices(end);
+end
+disp(['lines: ', num2str(line_nums_1(:,1)')])
+
+ab_output = load(ab_path);
+
 A=ab_output(:,1:3);
 B=ab_output(:,4:6);
 sita=real(acos(sqrt(B(:,1).^2+B(:,2).^2))*180/pi);
@@ -380,7 +399,7 @@ if isempty(MEDIAN0) || isempty(MEDIAN1)
        line_nums_2(i,3)=line_2(i);
     end
 end
-figure('Position', [100, 100, 1880, 1560]);
+figure('Position', [50, 20, 1580, 960]);
 sg=sgtitle('Lineament Identification and Classification');
 set(sg,'fontsize',20,'fontweight','bold');
 subplot(4,3,[1 4 7])
@@ -465,7 +484,7 @@ if isempty(C)
     error('No C Value')
 end
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg=sgtitle('Fault Segment Clustering')
     set(sg,'fontsize',20,'fontweight','bold')
     annotation('textbox', [0.42 0.01 0.2 0.05], 'String', 'Longitude', ...
@@ -477,7 +496,7 @@ for l=1:length(C)
     if Cmode==1
         subplot(4,4,[figureloc(1,l),figureloc(2,l)])
     elseif Cmode==2
-        figure('Position', [100+l*50, 50, 680, 580]);
+        figure('Position', [50+l*50, 20, 680, 580]);
         sg=sgtitle('Fault Segment Clustering')
         set(sg,'fontsize',20,'fontweight','bold')
     end
@@ -546,7 +565,7 @@ if isempty(C)
     error('No C value')
 end
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg=sgtitle('Fault Zone Fitting')
     set(sg,'fontsize',20,'fontweight','bold')
     annotation('textbox', [0.42 0.01 0.2 0.05], 'String', 'Longitude', ...
@@ -558,7 +577,7 @@ for l=1:length(C)
     if Cmode==1
         subplot(4,4,[figureloc(1,l),figureloc(2,l)])
     elseif Cmode==2
-       figure('Position', [100+l*50, 50, 680, 580]);
+       figure('Position', [50+l*50, 20, 680, 580]);
         sg=sgtitle('Fault Fitting')
         set(sg,'fontsize',20,'fontweight','bold')
     end
@@ -624,7 +643,7 @@ for j=1:length(C)
     RSMratio=[RSMratio;log10(Moreal)./log10(Motheo),j.*ones(size(FR,1),1),Motheo,Moreal];
     RSM=[RSM;log10(Moreal)./log10(Motheo)];
 end
-figure('Position', [100, 100, 1880, 1560]);
+figure('Position', [50, 20, 1580, 960]);
 sg=sgtitle('Choose a C-value');
 set(sg,'fontsize',20,'fontweight','bold');
 EvaLF(ASPECT3D,RSMratio,size(hypo,1),C,(10-mi)/10);
@@ -642,7 +661,7 @@ if isempty(FaultParameters)
 end
 figureloc=[1,2,3,4,9,10,11,12;5,6,7,8,13,14,15,16];
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg1=title('Dip');
     set(sg1,'fontsize',20,'fontweight','bold');
     maxel=[];
@@ -659,7 +678,7 @@ if Cmode==1
     end
 elseif Cmode==2
     for l=1:length(C)
-        figure('Position', [100+l*50, 100, 680, 580]);
+        figure('Position', [50+l*50, 20, 680, 580]);
         set(gca,'fontsize',20,'fontweight','bold');
         %% Dip
         Dip=FaultParameters(FaultParameters(:,28)==C(l),26);
@@ -708,7 +727,7 @@ global Optimal_C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate Optima
 if isempty(line_nums_2)
         error('Run Classify first')
 end
-figure('Position', [100, 100, 880, 960]); 
+figure('Position', [50, 20, 880, 960]); 
 Optimal_FaultParameters=[];
 [MaxMw,FE_km,FE_deg_O]=zdHouDBS(Optimal_C,1,f_sort_E2F,line_nums_2,la0,lo0,minPoi,hypo,colortemplate);
 line_e=unique(FE_deg_O(:,end));
@@ -765,17 +784,19 @@ header = {
     '#8-10 Major Axis Lower Endpoint X (km) Major Axis Lower Endpoint Y (km) Major Axis Lower Endpoint Z (km)',...
     '#11-13 Intermediate Axis Upper Endpoint X (km) Intermediate Axis Upper Endpoint Y (km) Intermediate Axis Upper Endpoint Z (km)',...
     '#14-16 Intermediate Axis Lower Endpoint X (km) Intermediate Axis Lower Endpoint Y (km) Intermediate Axis Lower Endpoint Z (km)',...
-    '#17 Strike (deg)',...
-    '#18 Dip Angle (deg)',...
-    '#19 Optimal C Value',...
-    '#20 Number of Events constituting the fault'
+    '#17-19 Short Axis Upper Endpoint X (km) Short Axis Upper Endpoint Y (km) Short Axis Upper Endpoint Z (km)',...
+    '#20-22 Short Axis Lower Endpoint X (km) Short Axis Lower Endpoint Y (km) Short Axis Lower Endpoint Z (km)',...
+    '#23 Strike (deg)',...
+    '#24 Dip Angle (deg)',...
+    '#25 Optimal C Value',...
+    '#26 Number of Events constituting the fault'
 };
 fileID = fopen([currentPath,'/OutputFile/Fault_Segment_Modeling.txt'], 'w');
 for i=1:length(header)
     fprintf(fileID, '%s\n', header{i}); 
 end
 fclose(fileID);
-Fault_Segment_Modeling=[Optimal_FaultParameters(:,30),Optimal_FaultParameters(:,1:3),Optimal_FaultParameters(:,7:18),Optimal_FaultParameters(:,25:26),Optimal_FaultParameters(:,28:29)];
+Fault_Segment_Modeling=[Optimal_FaultParameters(:,30),Optimal_FaultParameters(:,1:3),Optimal_FaultParameters(:,7:24),Optimal_FaultParameters(:,25:26),Optimal_FaultParameters(:,28:29)];
 dlmwrite([currentPath,'/OutputFile/Fault_Segment_Modeling.txt'], Fault_Segment_Modeling,'delimiter', ' ','precision', 6, '-append'); 
 disp(['Has Written in ',[currentPath,'/OutputFile/Fault_Segment_Modeling.txt']])
 %% myVar
@@ -882,7 +903,7 @@ if isempty(FaultParameters)
 end
 figureloc=[1,2,3,4,9,10,11,12;5,6,7,8,13,14,15,16];
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg1=sgtitle('Strike');
     set(sg1,'fontsize',20,'fontweight','bold');
     maxaz=[];
@@ -900,7 +921,7 @@ if Cmode==1
     end
 elseif Cmode==2
     for l=1:length(C)
-        figure('Position', [100+l*50, 100, 680, 580]);
+        figure('Position', [50+l*50, 20, 680, 580]);
         set(gca,'fontsize',20,'fontweight','bold');
         %% Azimuth
         Azimuth=FaultParameters(FaultParameters(:,28)==C(l),25);
@@ -946,7 +967,7 @@ end
 % log10(RSMratio(:,4))./log10(RSMratio(:,3))
 % log(RSMratio(:,4))./log(RSMratio(:,3))
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg1=sgtitle('RSM');
     set(sg1,'fontsize',20,'fontweight','bold');
     annotation('textbox', [0.4 0.01 0.2 0.05], 'String', 'Ellipsoid based Mo', ...
@@ -974,7 +995,7 @@ if Cmode==1
 elseif Cmode==2
     mi
     for l=1:length(C)
-        figure('Position', [100+l*50, 50, 680, 580]);
+        figure('Position', [50+l*50, 20, 680, 580]);
         sg1=sgtitle('RSM ');
         set(sg1,'fontsize',20,'fontweight','bold');
         %% RSM
@@ -1013,7 +1034,7 @@ if isempty(ASPECT3D)
 end
 figureloc=[1,2,3,4,9,10,11,12;5,6,7,8,13,14,15,16];
 if Cmode==1
-    figure('Position', [100, 100, 1880, 1560]);
+    figure('Position', [50, 20, 1580, 960]);
     sg1=sgtitle('3-D Aspect Ratio');
     set(sg1,'fontsize',20,'fontweight','bold');
     maxylim=[];
@@ -1035,7 +1056,7 @@ if Cmode==1
     end
 elseif Cmode==2
     for l=1:length(C)
-        figure('Position', [100+l*50, 50, 680, 580]);
+        figure('Position', [50+l*50, 20, 680, 580]);
         sg1=sgtitle('3-D Aspect Ratio');
         set(sg1,'fontsize',20,'fontweight','bold');
         id=find(ASPECT3D(:,1)==l);
