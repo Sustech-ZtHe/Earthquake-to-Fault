@@ -13,7 +13,7 @@ How to start?
 *Install the Eigen (http://eigen.tuxfamily.org/)  
 *Let the three zips (hough-3d-lines-master, eigen-3.4.0, Earthquake-to-fault-main) be placed in a directory such as 'E2F'.  
 Then  
-1): Setup the Eigen (C++ library) at first  
+1): Setup the Eigen (C++ library) at first (For Windows systems, proceed directly to step 1.2.)  
 &nbsp;&nbsp;1.1 mkdir build  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd build  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmake ..  
