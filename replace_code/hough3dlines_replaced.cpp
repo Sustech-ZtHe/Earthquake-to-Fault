@@ -275,8 +275,16 @@ int main(int argc, char ** argv) {
   	return 1; 
   } 
   // 拼接文件路径 
-  string filepath_sp = string(cwd) + "/hough-3d-lines-master/sp.output.txt"; 
-  string filepath_ab = string(cwd) + "/hough-3d-lines-master/ab.output.txt";
+  ifdef _WIN32
+  // Windows 系统
+    string filepath_sp = string(cwd) + "\\hough-3d-lines-master\\sp.output.txt"; 
+    string filepath_ab = string(cwd) + "\\hough-3d-lines-master\\ab.output.txt";
+  else
+  // Linux / macOS 等 UNIX 系统
+    string filepath_sp = string(cwd) + "/hough-3d-lines-master/sp.output.txt"; 
+    string filepath_ab = string(cwd) + "/hough-3d-lines-master/ab.output.txt";
+  endif
+
   FILE* fp = fopen(filepath_sp.c_str(), "w"); 
   FILE* fp_ab = fopen(filepath_ab.c_str(), "w"); 
   
