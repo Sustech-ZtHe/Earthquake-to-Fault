@@ -16,6 +16,13 @@
 #include <math.h>
 #include <unistd.h>
 #include <Eigen/Dense>
+#include <iostream>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 using Eigen::MatrixXf;
 using namespace std;
@@ -268,22 +275,48 @@ int main(int argc, char ** argv) {
   }
  
   ////
-  // 获取当前工作目录 
-  char cwd[1024]; 
-  if (getcwd(cwd, sizeof(cwd)) == NULL) { 
-  	perror("getcwd() error"); 
-  	return 1; 
-  } 
-  // 拼接文件路径 
-  ifdef _WIN32
-  // Windows 系统
-    string filepath_sp = string(cwd) + "\\hough-3d-lines-master\\sp.output.txt"; 
-    string filepath_ab = string(cwd) + "\\hough-3d-lines-master\\ab.output.txt";
-  else
-  // Linux / macOS 等 UNIX 系统
-    string filepath_sp = string(cwd) + "/hough-3d-lines-master/sp.output.txt"; 
-    string filepath_ab = string(cwd) + "/hough-3d-lines-master/ab.output.txt";
-  endif
+  // // 获取当前工作目录 
+  // char cwd[1024]; 
+  // if (getcwd(cwd, sizeof(cwd)) == NULL) { 
+  // 	perror("getcwd() error"); 
+  // 	return 1; 
+  // } 
+
+
+  // // 拼接文件路径 
+  // string filepath_sp = string(cwd) + "/hough-3d-lines-master/sp.output.txt"; 
+  // string filepath_ab = string(cwd) + "/hough-3d-lines-master/ab.output.txt";
+
+
+      string filepath_sp;
+      string filepath_ab;
+
+  #ifdef _WIN32
+      // Windows 获取当前路径
+      char cwd[1024];
+      if (!GetCurrentDirectoryA(sizeof(cwd), cwd)) {
+          perror("GetCurrentDirectory error");
+          return 1;
+      }
+      filepath_sp = string(cwd) + "\\hough-3d-lines-master\\sp.output.txt";
+      filepath_ab = string(cwd) + "\\hough-3d-lines-master\\ab.output.txt";
+
+  #else
+      // Linux / Unix 获取当前路径
+      char cwd[1024];
+      if (getcwd(cwd, sizeof(cwd)) == NULL) {
+          perror("getcwd() error");
+          return 1;
+      }
+      filepath_sp = string(cwd) + "/hough-3d-lines-master/sp.output.txt";
+      filepath_ab = string(cwd) + "/hough-3d-lines-master/ab.output.txt";
+  #endif
+
+      // 打印结果确认
+      cout << "SP file path: " << filepath_sp << endl;
+      cout << "AB file path: " << filepath_ab << endl;
+
+
 
   FILE* fp = fopen(filepath_sp.c_str(), "w"); 
   FILE* fp_ab = fopen(filepath_ab.c_str(), "w"); 
