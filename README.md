@@ -1,4 +1,4 @@
-E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (suggested) and Widows 
+E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (suggested) and Widows  
 The main script is E2F_V1.m  
 # Earthquake-to-Fault  
 This is a self-adaptive fault detection tool from high-precision earthquake catalog based on Hough transform  
