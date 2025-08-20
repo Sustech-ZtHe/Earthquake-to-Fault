@@ -2,6 +2,7 @@ E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (
 The main script is E2F_V1.m  
 # Earthquake-to-Fault  
 
+# Reference  
 **He, Z., and R. Wang (2025). E2F: Extract Fault Geometry from Earthquake Catalogs, Seismol. Res. Lett. XX,1–11, doi: 10.1785/0220250138**  
 
 This is a self-adaptive fault detection tool from high-precision earthquake catalog based on Hough transform  
