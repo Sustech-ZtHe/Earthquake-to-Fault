@@ -67,6 +67,5 @@ NOTE:
 # Reference  
 **He, Z., and R. Wang (2025). E2F: Extract Fault Geometry from Earthquake Catalogs, Seismol. Res. Lett. XX,1–11, doi: 10.1785/0220250138**  
 
-
 Feel free to contact us on WeChat (H-explorer) or via email (hezhengtao2001@163.com).  
 The Python version will be launched soon.
