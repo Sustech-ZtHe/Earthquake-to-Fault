@@ -71,12 +71,11 @@ if ~isempty(points)
         xlim([min(hypo(:,9))-d1 max(hypo(:,9))+d1]);
         ax.XTickLabel = string(ax.XTick) + "°E";
     end
+    ylim([min(hypo(:,8))-d2 max(hypo(:,8))+d2]);
     if min(points(:,2))>0
-        ylim([min(hypo(:,8))-d2 max(hypo(:,8))+d2]);
         ax.YTickLabel = string(ax.YTick) + "°N";
     else
-        ylim([abs(max(hypo(:,8))+d2) abs(min(hypo(:,8))-d2)]);
-        ax.YTickLabel = string(ax.YTick) + "°S";
+        ax.YTickLabel = string(abs(ax.YTick)) + "°S";
     end
 end
 
