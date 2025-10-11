@@ -18,9 +18,6 @@ Vector3d::Vector3d(double a, double b, double c) {
   x = a; y = b; z = c;
 }
 
-//Vector3d::Vector3d(double a, double b, double c,double d) {
-//  x = a; y = b; z = c; mag = d; 
-//}
 Vector3d::Vector3d(double a, double b, double c,double d, double e, double f, double g, double h, double i, double j) {
  x = a; y = b; z = c; mag = d; year=e; month=f; day=g; hour=h; minute=i; second=j;
 }
@@ -32,8 +29,19 @@ bool Vector3d::operator==(const Vector3d &rhs) const {
 }
 
 Vector3d& Vector3d::operator=(const Vector3d& other) {
-  x = other.x; y = other.y; z = other.z;  
-  return *this;
+    if (this != &other) {
+        x = other.x;
+        y = other.y;
+        z = other.z;
+        mag = other.mag;
+        year = other.year;
+        month = other.month;
+        day = other.day;
+        hour = other.hour;
+        minute = other.minute;
+        second = other.second;
+    }
+    return *this;
 }
 
 // nicely formatted output
@@ -49,16 +57,35 @@ double Vector3d::norm() const {
 }
 
 // mathematical vector operations
-
-// vector addition
+// vector addition：
 Vector3d operator+(Vector3d x, Vector3d y) {
-  Vector3d v(x.x + y.x, x.y + y.y, x.z + y.z);
+  Vector3d v;
+  v.x = x.x + y.x;
+  v.y = x.y + y.y;
+  v.z = x.z + y.z;
+  v.mag = x.mag; 
+  v.year = x.year;
+  v.month = x.month;
+  v.day = x.day;
+  v.hour = x.hour;
+  v.minute = x.minute;
+  v.second = x.second;
   return v;
 }
 
-// vector subtraction
+// vector subtraction：
 Vector3d operator-(Vector3d x, Vector3d y) {
-  Vector3d v(x.x - y.x, x.y - y.y, x.z - y.z);
+  Vector3d v;
+  v.x = x.x - y.x;
+  v.y = x.y - y.y;
+  v.z = x.z - y.z;
+  v.mag = x.mag;
+  v.year = x.year;
+  v.month = x.month;
+  v.day = x.day;
+  v.hour = x.hour;
+  v.minute = x.minute;
+  v.second = x.second;
   return v;
 }
 
