@@ -4,7 +4,7 @@ To resolve this, please replace "vector3d.cpp" with "vector3d_replaced.cpp" and 
 Contributor: Junhao Tao  
 
 # Earthquake-to-Fault(E2F)  
-E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (suggested) and Widows  
+E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (suggested) and Windows  
 The main script is E2F_V1.m  
 
 This is a self-adaptive fault detection tool from high-precision earthquake catalog based on Hough transform  
