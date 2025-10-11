@@ -1,11 +1,12 @@
-# Note (for existing E2F users)  
+**Note (for existing E2F users)**  
 An issue was identified where event information was not properly synchronized with the corresponding timestamps.  
 To fix this, please replace vector3d.cpp with vector3d_replaced.cpp and recompile the project. ^-^  
 Contributor: Junhao Tao  
 
+# Earthquake-to-Fault(E2F)  
 E2F is based on the MATLAB framework, and it is tested on Linux Ubuntu 22.04.5 (suggested) and Widows  
 The main script is E2F_V1.m  
-# Earthquake-to-Fault  
+
 This is a self-adaptive fault detection tool from high-precision earthquake catalog based on Hough transform  
 The E2F (Earthquake-to-Fault) is released and maintained at https://github.com/Sustech-ZtHe/Earthquake-to-Fault  
 The toolbox of MATLAB (R2023b) required:  
