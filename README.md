@@ -1,6 +1,6 @@
 **Note (for existing E2F users)**  
 An issue was identified where event information was not properly synchronized with the corresponding timestamps.  
-To fix this, please replace "vector3d.cpp" with "vector3d_replaced.cpp" and recompile the project. ^-^  
+To resolve this, please replace "vector3d.cpp" with "vector3d_replaced.cpp" and recompile the project. ^-^  
 Contributor: Junhao Tao  
 
 # Earthquake-to-Fault(E2F)  
