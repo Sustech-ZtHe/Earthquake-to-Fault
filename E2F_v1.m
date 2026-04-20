@@ -22,7 +22,7 @@ function varargout = E2F_v1(varargin)
 
 % Edit the above text to modify the response to help E2F_v1
 
-% Last Modified by GUIDE v2.5 29-Apr-2025 20:05:19
+% Last Modified by GUIDE v2.5 23-Dec-2025 16:10:32
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -100,12 +100,13 @@ disp('All variables have been cleared and E2F has been closed');
 %% STEP 0
 function input_Callback(hObject, eventdata, handles)
 [filename,path]=uigetfile('*','Earthquake Catalog')
-global  minPoi hypo evla evlo_km evla_km depth mag la0 lo0 colortemplate mi evlo evdp
+global  minPoi_manual hypo evla evlo_km evla_km depth mag la0 lo0 colortemplate mi evlo evdp
 hypo =load([path filename]);
 if size(hypo,2)>11
     error('Please Check Input File Format!')
 end
-minPoi=10;
+% minPoi=40;
+% minPoi_manual=10;
 colortemplate=rand(10000,10000);mi=4;
 lon=hypo(:,9);
 lat=hypo(:,8);
@@ -190,7 +191,7 @@ for i = 1:length(vars)
 end
 
 function classify_Callback(hObject, eventdata, handles)
-global fai PBAD_Multiple fai_MODE main_fnum A B line_nums_1 f_sort la0 lo0 line_nums_2 f_sort_E2F main_fault angle_tolerance hypo evlo_km evla_km  mag hypo_out_points sita currentPath evdp
+global dx_manual fai PBAD_Multiple fai_MODE main_fnum A B line_nums_1 f_sort la0 lo0 line_nums_2 f_sort_E2F main_fault angle_tolerance hypo evlo_km evla_km  mag hypo_out_points sita currentPath evdp
 lim=[];faiup=[];faidown=[];uplim=[];downlim=[];faia=[];faiu=[];
 MEDIAN0=[];MEDIAN1=[];f_sort0=[];f_sort1=[];Values=[];rangedown=[];rangeup=[];
 if isempty(fai_MODE)
@@ -203,13 +204,13 @@ currentPath = pwd;
 % 判断系统平台
 if ispc
     sep = '\';
-    exe = '.\hough-3d-lines-master\hough3dlines.exe';
+    exe = sprintf('.\\hough-3d-lines-master\\hough3dlines.exe -dx %d', dx_manual)
     sp_path = [currentPath, '\hough-3d-lines-master\sp.output.txt'];
     ab_path = [currentPath, '\hough-3d-lines-master\ab.output.txt'];
     dat_path = [currentPath, '\hough-3d-lines-master\data\fault_try.dat'];
 else
     sep = '/';
-    exe = './hough-3d-lines-master/hough3dlines';
+    exe = sprintf('./hough-3d-lines-master/hough3dlines -dx %d', dx_manual)
     sp_path = [currentPath, '/hough-3d-lines-master/sp.output.txt'];
     ab_path = [currentPath, '/hough-3d-lines-master/ab.output.txt'];
     dat_path = [currentPath, '/hough-3d-lines-master/data/fault_try.dat'];
@@ -222,6 +223,7 @@ command = [exe, ' ', dat_path];
 system(command);
 % 读取输出结果
 f_sort = load(sp_path);
+
 for i = 1:f_sort(end)
     indices = find(f_sort(:,end) == i);
     line_nums_1(i,1) = indices(1);
@@ -478,7 +480,7 @@ for i = 1:length(vars)
 end
 
 function Segment_cluster_Callback(hObject, eventdata, handles)
-global C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate Kused FE_deg Cmode
+global C f_sort_E2F line_nums_2 hypo minPoi_manual la0 lo0 colortemplate Kused FE_deg Cmode
 Kused=[];figureloc=[1,2,3,4,9,10,11,12;5,6,7,8,13,14,15,16];
 if isempty(C)
     error('No C Value')
@@ -520,7 +522,7 @@ for l=1:length(C)
                 radius=c*radius_model(Mw);
                 [~,s4]=sort(ftest4(:,4),'descend');
                 ftest4=ftest4(s4,:);
-                idx_5=dbscan(ftest4(:,1:3),radius,minPoi);
+                idx_5=dbscan(ftest4(:,1:3),radius,minPoi_manual);
                 nw=nw+1;
                 if all(idx_5 == -1) || isempty(idx_5)
                     % RabY=[RabY;i,a,b,size(ftest4,1),Mobs,Mthre,Mw,0,];
@@ -546,8 +548,6 @@ for l=1:length(C)
     end
     FE_deg=KMtoDEG(FE_km,la0,lo0);
     Scatter3_E2F(hypo,FE_deg,['C= ',num2str(C(l))],0);
-    % figure;histogram(RJA,20);title('a')
-    % figure;histogram(RJB,20);title('b')
 end
 disp('Segment Clustering Finished');
 % myVar
@@ -557,7 +557,7 @@ for i = 1:length(vars)
 end
 
 function Fault_fitting_Callback(hObject, eventdata, handles)
-global C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate FaultParameters Magrecord ASPECT3D MwD Cmode
+global C f_sort_E2F line_nums_2 hypo minPoi_manual la0 lo0 colortemplate FaultParameters Magrecord ASPECT3D MwD Cmode
 ASPECT3D=[];MwD=[];
 Azimuth=[];Elevation=[];FaultParameters=[];Magrecord=[];
 figureloc=[1,2,3,4,9,10,11,12;5,6,7,8,13,14,15,16];
@@ -581,7 +581,7 @@ for l=1:length(C)
         sg=sgtitle('Fault Fitting')
         set(sg,'fontsize',20,'fontweight','bold')
     end
-    [MaxMw,FE_km,FE_deg]=zdHouDBS(C,l,f_sort_E2F,line_nums_2,la0,lo0,minPoi,hypo,colortemplate);
+    [MaxMw,FE_km,FE_deg]=zdHouDBS(C,l,f_sort_E2F,line_nums_2,la0,lo0,minPoi_manual,hypo,colortemplate);
     MwD=[MwD;[MaxMw,C(l).*ones(length(MaxMw),1)]];
     EP_km=[];n=0;ell=[];
     line_e=unique(FE_deg(:,end));
@@ -600,7 +600,6 @@ for l=1:length(C)
         Elevation=[Elevation;[dip,l]];
         Magrecord=[Magrecord;[sp_km(:,4),ones(size(sp_km,1),1).*l,ones(size(sp_km,1),1).*n]];
         FaultParameters=[FaultParameters;[median(sp_km(:,1:3)),a,b,c,p1_u,p1_d,p2_u,p2_d,p3_u,p3_d,az,dip,aspect3d,C(l),size(sp_km,1),sp_km(1,14)]];
-        % EP_km=[EP_km;ellipsoid_points,sp_km(1,11:13).*ones(size(ellipsoid_points,1),3)];
         ASPECT3D=[ASPECT3D;[l,size(sp_km,1),aspect3d]];
     end
     Scatter3_E2F(hypo,FE_deg,['C= ',num2str(C(1,l))],0);hold on
@@ -634,7 +633,6 @@ for j=1:length(C)
     num1=find(Magrecord(:,2)==j);
     D=MagD(MwD(numD,1));
     Motheo=3*10^10.*(10^3.*SubRLength).*(10^3.*SubRWidth).*10^3.*SubRLength.*D;
-    % Motheo=3*10^11.*(10^3.*SubRLength).*(10^3.*SubRWidth).*SubRLength;
     MR=Magrecord(num1,:);
     for i1=1:MR(end,3)       
         num2=find(MR(:,3)==i1);
@@ -723,13 +721,13 @@ end
 
 % --- Executes on button press in Fault_Model.
 function Fault_Model_Callback(hObject, eventdata, handles)
-global Optimal_C f_sort_E2F line_nums_2 hypo minPoi la0 lo0 colortemplate Optimal_FaultParameters FE_deg_O
+global Optimal_C f_sort_E2F line_nums_2 hypo minPoi_manual la0 lo0 colortemplate Optimal_FaultParameters FE_deg_O
 if isempty(line_nums_2)
         error('Run Classify first')
 end
 figure('Position', [50, 20, 880, 960]); 
 Optimal_FaultParameters=[];
-[MaxMw,FE_km,FE_deg_O]=zdHouDBS(Optimal_C,1,f_sort_E2F,line_nums_2,la0,lo0,minPoi,hypo,colortemplate);
+[MaxMw,FE_km,FE_deg_O]=zdHouDBS(Optimal_C,1,f_sort_E2F,line_nums_2,la0,lo0,minPoi_manual,hypo,colortemplate);
 line_e=unique(FE_deg_O(:,end));
 for i=1:length(line_e)
    line_nums_e(i,1)=find(ismember(FE_deg_O(:,end),line_e(i,1),'rows'),1);
@@ -744,7 +742,7 @@ for i=1:length(line_e)
 end
 sgtitle(sprintf(['Fault Structure Modeling\n',sprintf('Optimal C-value = %.4f',Optimal_C)]));
 set(gca,'fontsize',20,'fontweight','bold');
-Rectangle_points=SUBfault_con(Optimal_C,f_sort_E2F,line_nums_2,hypo,Optimal_FaultParameters,minPoi,colortemplate);
+Rectangle_points=SUBfault_con(Optimal_C,f_sort_E2F,line_nums_2,hypo,Optimal_FaultParameters,minPoi_manual,colortemplate);
 %% myVar
 vars = whos;  % 获取当前函数中的所有变量信息
 for i = 1:length(vars)
@@ -964,8 +962,6 @@ for j=1:length(C)
     RSMratio=[RSMratio;log10(Moreal)./log10(Motheo),j.*ones(size(FR,1),1),Motheo,Moreal];
     RSM=[RSM;log10(Moreal)./log10(Motheo)];
 end
-% log10(RSMratio(:,4))./log10(RSMratio(:,3))
-% log(RSMratio(:,4))./log(RSMratio(:,3))
 if Cmode==1
     figure('Position', [50, 20, 1580, 960]);
     sg1=sgtitle('RSM');
@@ -1094,6 +1090,7 @@ function degree1_Callback(hObject, eventdata, handles)
 global C Cmode
 if (get(hObject,'Value') == get (hObject,'Max'))
     C=[1,1.5,2,2.5,3,3.5,4,5]
+    % C=[5,6,7,8,9,10,11,12]
     Cmode=1;
 end
 % myVar
@@ -1106,7 +1103,8 @@ end
 function degree2_Callback(hObject, eventdata, handles)
 global C Cmode
 if (get(hObject,'Value') == get (hObject,'Max'))
-    C=[5,10,15,20,25,30,35,40]
+    % C=[5,10,15,20,25,30,35,40]
+    C=[20,25,30,35,40,45,50,55]
     Cmode=1;
 end
 % myVar
@@ -1132,3 +1130,98 @@ end
 
 % --- Executes on key press with focus on main_strike_direction and none of its controls.
 function main_strike_direction_KeyPressFcn(hObject, eventdata, handles)
+
+
+
+function edit17_Callback(hObject, eventdata, handles)
+global dx_manual
+inputStr = strtrim(get(hObject, 'String'));  % 获取并去除输入字符串的前后空白字符
+dx_manual = str2double(inputStr)  % 转换为数字
+
+% myVar
+vars = whos; 
+for i = 1:length(vars)
+    assignin('base', vars(i).name, eval(vars(i).name));
+end
+% hObject    handle to edit17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit17 as text
+%        str2double(get(hObject,'String')) returns contents of edit17 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit17_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+function edit18_Callback(hObject, eventdata, handles)
+global minPoi_manual
+inputStr = strtrim(get(hObject, 'String'));  % 获取并去除输入字符串的前后空白字符
+minPoi_manual = str2double(inputStr)  % 转换为数字
+
+
+
+% myVar
+vars = whos; 
+for i = 1:length(vars)
+    assignin('base', vars(i).name, eval(vars(i).name));
+end
+% hObject    handle to edit18 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit18 as text
+%        str2double(get(hObject,'String')) returns contents of edit18 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit18_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit18 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton40.
+function pushbutton40_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton40 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit31_Callback(hObject, eventdata, handles)
+% hObject    handle to edit31 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit31 as text
+%        str2double(get(hObject,'String')) returns contents of edit31 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit31_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit31 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
