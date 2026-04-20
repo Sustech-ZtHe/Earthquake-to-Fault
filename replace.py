@@ -1,34 +1,35 @@
-import os
 import shutil
+import os
+current_path=os.getcwd()
+dir_path=os.path.dirname(current_path)
+h3d_road=f"{dir_path}/hough-3d-lines-master"
+e2f_road=f"{dir_path}/Earthquake-to-Fault-main"
+fault_road=f"{dir_path}/OutputFile"
+Catalog_example_road=f"{e2f_road}/Catalog_example"
+e2fpackage_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_package"
+e2fgui_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.m"
+e2fguifig_road=f"{dir_path}/Earthquake-to-Fault-main/E2F_v1.fig"
+os.makedirs(fault_road, exist_ok=True)
 
-# 当前目录（就是 replace.py 所在目录）
-base_path = os.getcwd()
+# origin file road
+origin_h3d_main= f"{h3d_road}/hough3dlines.cpp"
+origin_pointcloud= f"{h3d_road}/pointcloud.cpp"
+origin_vector3d= f"{h3d_road}/vector3d.cpp"
+origin_vector3d_h= f"{h3d_road}/vector3d.h"
+# replace file road
+replace_h3d_main = f"{e2f_road}/replace_code/hough3dlines_replaced.cpp"
+replace_pointcloud= f"{e2f_road}/replace_code/pointcloud_replaced.cpp"
+replace_vector3d= f"{e2f_road}/replace_code/vector3d_replaced.cpp"
+replace_vector3d_h= f"{e2f_road}/replace_code/vector3d_replaced.h"
 
-# 源（替换文件）
-replace_dir = os.path.join(base_path, "replace_code")
+# replace file
+shutil.copyfile(replace_h3d_main, origin_h3d_main)
+shutil.copyfile(replace_pointcloud, origin_pointcloud)
+shutil.copyfile(replace_vector3d, origin_vector3d)
+shutil.copyfile(replace_vector3d_h, origin_vector3d_h)
 
-# 目标（被替换文件）
-target_dir = os.path.join(base_path, "hough-3d-lines-master")
-
-# 文件映射关系
-file_map = {
-    "hough3dlines_replaced.cpp": "hough3dlines.cpp",
-    "pointcloud_replaced.cpp": "pointcloud.cpp",
-    "vector3d_replaced.cpp": "vector3d.cpp",
-    "vector3d_replaced.h": "vector3d.h",
-}
-
-# 执行替换
-for src_name, dst_name in file_map.items():
-    src = os.path.join(replace_dir, src_name)
-    dst = os.path.join(target_dir, dst_name)
-
-    print(f"复制: {src} -> {dst}")
-
-    if not os.path.exists(src):
-        print(f"源文件不存在: {src}")
-        continue
-
-    shutil.copyfile(src, dst)
-
-print("替换完成")
+#move GUI and .fig
+shutil.move(e2fpackage_road,dir_path)
+shutil.move(e2fgui_road,dir_path)
+shutil.move(e2fguifig_road,dir_path)
+shutil.move(Catalog_example_road,dir_path)
